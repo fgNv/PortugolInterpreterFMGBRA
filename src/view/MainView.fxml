@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.cell.*?> 
+<?import javafx.collections.*?> 
+
+<GridPane id="AnchorPane" vgap="10" hgap="10" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" 
+          fx:controller="view.MainViewController" maxHeight="Infinity" maxWidth="Infinity">
+    <stylesheets>
+        <URL value="@mainview.css"/>
+    </stylesheets>
+    <padding>
+        <Insets top="25" right="25" bottom="10" left="25"/>
+    </padding>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3">Portugol Parser</Label>
+    
+    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="2">
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Código</Label>
+        <TextArea fx:id="inputField" GridPane.rowIndex="1" GridPane.columnIndex="0"  GridPane.hgrow="always" GridPane.vgrow="always"/>
+    </GridPane>
+    
+    <!--<TextArea fx:id="inputField" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="3"   GridPane.hgrow="always" GridPane.vgrow="always"/>-->
+    
+    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1">
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Erros</Label>
+        <ListView fx:id="errors" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always"/>
+    </GridPane>
+    
+    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="2">
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Funções</Label>
+        <ListView fx:id="functions" GridPane.rowIndex="1" GridPane.columnIndex="0"  GridPane.hgrow="always" GridPane.vgrow="always"/>
+    </GridPane>
+    
+    <GridPane GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2">
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Variáveis</Label>
+        <TableView fx:id="variables" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always">
+            <columns>
+                <TableColumn text="Name" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="name" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Scope">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="scope" />
+                    </cellValueFactory>
+                </TableColumn>          
+                <TableColumn text="Type" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="type" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Function" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="function" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>    
+        </TableView>
+    </GridPane>
+    
+    
+</GridPane>
