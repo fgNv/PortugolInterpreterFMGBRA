@@ -26,8 +26,6 @@
         <TextArea fx:id="inputField" GridPane.rowIndex="1" GridPane.columnIndex="0"  GridPane.hgrow="always" GridPane.vgrow="always"/>
     </GridPane>
     
-    <!--<TextArea fx:id="inputField" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="3"   GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-    
     <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1">
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Erros</Label>
         <ListView fx:id="errors" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always"/>
