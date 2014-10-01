@@ -32,14 +32,14 @@ public class LanguageManager {
     }
 
     public List<String> Validate(String input) {
-        Tools tools = new Tools(input);
-
+        
         List<String> result;
         result = new ArrayList<>();
 
         LexiconErrorHandler tratadorErrosLexico = new LexiconErrorHandler(result);
         SyntactictErrorHandler tratadorErrosSintatico = new SyntactictErrorHandler(result);
 
+        Tools tools = new Tools(input);
         tools.lexer.removeErrorListeners();
         tools.parser.removeErrorListeners();
 
@@ -57,8 +57,9 @@ public class LanguageManager {
     }
     
     public Symbols GetVariableList(String input){
-        Tools tools = new Tools(input);
+        
         GatherSymbolsListener gatherSymbolsListener = new GatherSymbolsListener();
+        Tools tools = new Tools(input);
         ParserRuleContext tree = tools.parser.programa(); 
         
         ParseTreeWalker walker = new ParseTreeWalker(); 

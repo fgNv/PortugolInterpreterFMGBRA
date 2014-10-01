@@ -28,6 +28,12 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         Variable var = new Variable(ctx.ID(0).getText(), currentScopeLevel, currentType, currentFunctionName);
         variables.add(var);
     }
+    
+    @Override
+    public void enterDec_item_param(PortugolParser.Dec_item_paramContext ctx){
+        Variable var = new Variable(ctx.ID().getText(), currentScopeLevel, ctx.tipo().getText(), currentFunctionName);
+        variables.add(var);
+    }
 
     @Override
     public void enterDec_var(PortugolParser.Dec_varContext ctx) {

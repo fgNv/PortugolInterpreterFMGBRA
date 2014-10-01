@@ -20,7 +20,15 @@ public final class Variable {
     private final IntegerProperty scope = new SimpleIntegerProperty();
     private final StringProperty type= new SimpleStringProperty();
     private final StringProperty function= new SimpleStringProperty();
-
+    private boolean isInitialiazed;
+    private boolean isUsed;
+    private boolean isParameter;
+    private int parameterPosition;
+    private boolean isReference;
+    private boolean isVector;
+    private boolean isMatrix;
+    private boolean isFunction;
+    
     public Variable(String name, int scope, String type, String function) {
         setName(name);
         setScope(scope);

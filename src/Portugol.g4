@@ -10,9 +10,9 @@ declaracoes : (dec_funcao | dec_var | dec_constante)*;
 item_var : ID ('=' expressao)? | ID('[' (INTEIRO | ID )? ']')+ ('=' inicializacao_vetor)? ;
 lista_var : item_var (',' item_var)*;
 dec_var : tipo lista_var ;
-inicializacao_vetor: '{' inicializacao_vetor (',' inicializacao_vetor)* '}' | '{' valor_constante (',' valor_constante)* '}';
+inicializacao_vetor: '{' inicializacao_vetor (',' inicializacao_vetor)* '}' | '{' VALOR_CONSTANTE (',' VALOR_CONSTANTE)* '}';
 
-dec_constante : CONST tipo ID '=' valor_constante;
+dec_constante : CONST tipo ID '=' VALOR_CONSTANTE;
 
 dec_lista_param : dec_item_param (',' dec_item_param)*;
 dec_item_param: tipo '&'? ID;
@@ -21,25 +21,22 @@ dec_funcao : FUNCAO (tipo | 'vazio')? ID '(' dec_lista_param? ')' bloco;
 
 operando : id | valor | chamada_funcao;
 
-item_expressao : '(' item_expressao ')' |
-                 (NAO | NAO_BINARIO ) '(' item_expressao ')' |
-                    item_expressao ('*' | '/' | '%') item_expressao  |
-                    item_expressao ('+' | '-') item_expressao |
-                    item_expressao ('<<' | '>>') item_expressao |
-                    item_expressao ('<'  | '<=' | '>' | '>=') item_expressao |
-                    item_expressao ('=='  | '!=' ) item_expressao |
-                    item_expressao '&' item_expressao |
-                    item_expressao '|' item_expressao |
-                 item_expressao 'e' item_expressao |
-                 item_expressao 'ou' item_expressao |                 
-                 operando;
-
-expressao : item_expressao+ ;
+expressao : (NAO | NAO_BINARIO ) '(' expressao ')' |
+                  expressao ('*' | '/' | '%') expressao  |
+                  expressao ('+' | '-') expressao  |
+                  expressao ('<<' | '>>') expressao |
+                  expressao ('<'  | '<=' | '>' | '>=') expressao |
+                  expressao ('=='  | '!=' ) expressao |
+                  expressao '&' expressao |
+                  expressao '|' expressao |
+                  expressao 'e' expressao |
+                  expressao 'ou' expressao |
+                  operando | '(' expressao ')' ;   
 
 tipo : INTEIRO_DECLARACAO | REAL_DECLARACAO | CARACTER_DECLARACAO | CADEIA_DECLARACAO | LOGICO_DECLARACAO;
 id : ID ('[' expressao ']')*;
-valor : valor_constante | chamada_funcao | id;
-valor_constante : INTEIRO | REAL | CARACTER | CADEIA | LOGICO ;
+valor : VALOR_CONSTANTE | chamada_funcao | id;
+VALOR_CONSTANTE : INTEIRO | REAL | CARACTER | CADEIA | LOGICO ;
 
 se : SE '(' expressao ')' bloco (SENAO bloco)?;
 faca : FACA bloco ENQUANTO '(' expressao ')';
@@ -49,7 +46,7 @@ para : PARA '('contador_para? (',' contador_para)* ';' expressao? ';' atribuicao
 contador_para : tipo ID '=' expressao;
 
 escolha : ESCOLHA'('expressao')''{' caso* (CASO CONTRARIO ':' comando*)? '}';
-caso : CASO valor_constante ':' comando* PARE?;
+caso : CASO VALOR_CONSTANTE ':' comando* PARE?;
 
 bloco : '{' comando* '}' | comando;
 comando : (dec_var | enquanto | atribuicao | se | chamada_funcao | faca | escolha | retorno | para | leia | escreva | LIMPA'('')' );
@@ -158,6 +155,7 @@ REAL : [0-9]+ '.'? [0-9]+;
 CADEIA : '"' (. | '\"' | ESCAPES)*? '"' ;  
 CARACTER : '\'' (. | ESCAPES | '\'' )? '\'';
 LOGICO : 'verdadeiro' | 'falso';
+
 
 fragment
 ESCAPES : '\b' | '\n' | '\t' | '\f' | '\r' | '\\';
