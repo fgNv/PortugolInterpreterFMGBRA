@@ -1,4 +1,4 @@
-// Generated from C:\Users\Felipe\Desktop\Trash\MiniPseudoCompiladorPortugol\src\Portugol.g4 by ANTLR 4.2.2
+// Generated from C:\Projects\PortugolInterpreterFMGBRA\src\Portugol.g4 by ANTLR 4.2.2
 package Antl4GeneratedMember;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
@@ -96,13 +96,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitDec_constante(@NotNull PortugolParser.Dec_constanteContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#item_expressao}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitItem_expressao(@NotNull PortugolParser.Item_expressaoContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#se}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -136,13 +129,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitId(@NotNull PortugolParser.IdContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#valor_constante}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitValor_constante(@NotNull PortugolParser.Valor_constanteContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#corpo}.

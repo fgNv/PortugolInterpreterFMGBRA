@@ -5,9 +5,11 @@
  */
 package view;
 
+import Antl4GeneratedMember.PortugolLexer;
 import domain.LanguageManager;
 import domain.Symbols;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -43,9 +45,24 @@ public class MainViewController implements Initializable {
     @FXML
     public CodeArea codeArea;
     
-//    private static final Pattern KEYWORD_PATTERN = Pattern.compile("\\b(" + String.join("|", PortugolLexer.tokenNames ) + ")\\b");
-    private static final Pattern KEYWORD_PATTERN = Pattern.compile("\\b(programa | funcao)\\b");
+    private final Pattern keywordPattern = GetHighLightPattern();
     
+    private Pattern GetHighLightPattern() {
+        List<String> tokens = new ArrayList<>();
+
+        for (String input : PortugolLexer.tokenNames) {
+            input = input.replace("'", "");
+            if(!input.contains("<") && !input.contains(">") && !input.contains("+") && !input.contains("-")
+               && !input.contains("*") && !input.contains("/") && !input.contains(":") && !input.contains(";")
+               && !input.contains(".")&& !input.contains(",")&& !input.contains("{")&& !input.contains("}")
+               && !input.contains("[")&& !input.contains("]")&& !input.contains("(")&& !input.contains(")")
+               && !input.contains("=")&& !input.contains("!") && !input.contains("%") && !input.contains("&")
+               && !input.contains("|")&& !input.contains("~"))
+            tokens.add(Matcher.quoteReplacement(input));
+        }
+        return Pattern.compile(String.join("|", tokens));
+    }
+
     private final LanguageManager manager = new LanguageManager();
 
     private Task<Void> buildUpdateTask(String newValue) {
@@ -60,23 +77,23 @@ public class MainViewController implements Initializable {
         return task;
     }
 
-    private void SetupCodeArea(){        
+    private void SetupCodeArea() {
         String stylesheet = getClass().getResource("mainview.css").toExternalForm();
         IntFunction<String> format = (digits -> " %" + digits + "d ");
-        
+
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea, format, stylesheet));
         codeArea.textProperty().addListener((obs, oldText, newText) -> {
             codeArea.setStyleSpans(0, computeHighlighting(newText));
         });
-        
+
         codeArea.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             Task<Void> task = buildUpdateTask(newValue);
             task.run();
         });
     }
-    
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
+    public void initialize(URL url, ResourceBundle rb) {
         SetupCodeArea();
     }
 
@@ -91,12 +108,12 @@ public class MainViewController implements Initializable {
         errorsList = manager.Validate(input);
         this.errors.setItems(FXCollections.observableList(errorsList));
     }
-    
-    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
-        Matcher matcher = KEYWORD_PATTERN.matcher(text);
+
+    private StyleSpans<Collection<String>> computeHighlighting(String text) {
+        Matcher matcher = keywordPattern.matcher(text);
         int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder= new StyleSpansBuilder<>();
-        while(matcher.find()) {
+        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+        while (matcher.find()) {
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton("keyword"), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();

@@ -1,4 +1,4 @@
-// Generated from C:\Users\Felipe\Desktop\Trash\MiniPseudoCompiladorPortugol\src\Portugol.g4 by ANTLR 4.2.2
+// Generated from C:\Projects\PortugolInterpreterFMGBRA\src\Portugol.g4 by ANTLR 4.2.2
 package Antl4GeneratedMember;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
@@ -114,14 +114,6 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitItem_expressao(@NotNull PortugolParser.Item_expressaoContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitSe(@NotNull PortugolParser.SeContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -155,14 +147,6 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitId(@NotNull PortugolParser.IdContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitValor_constante(@NotNull PortugolParser.Valor_constanteContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

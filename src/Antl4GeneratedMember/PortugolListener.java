@@ -1,4 +1,4 @@
-// Generated from C:\Users\Felipe\Desktop\Trash\MiniPseudoCompiladorPortugol\src\Portugol.g4 by ANTLR 4.2.2
+// Generated from C:\Projects\PortugolInterpreterFMGBRA\src\Portugol.g4 by ANTLR 4.2.2
 package Antl4GeneratedMember;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -141,17 +141,6 @@ public interface PortugolListener extends ParseTreeListener {
 	void exitDec_constante(@NotNull PortugolParser.Dec_constanteContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link PortugolParser#item_expressao}.
-	 * @param ctx the parse tree
-	 */
-	void enterItem_expressao(@NotNull PortugolParser.Item_expressaoContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PortugolParser#item_expressao}.
-	 * @param ctx the parse tree
-	 */
-	void exitItem_expressao(@NotNull PortugolParser.Item_expressaoContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link PortugolParser#se}.
 	 * @param ctx the parse tree
 	 */
@@ -205,17 +194,6 @@ public interface PortugolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitId(@NotNull PortugolParser.IdContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link PortugolParser#valor_constante}.
-	 * @param ctx the parse tree
-	 */
-	void enterValor_constante(@NotNull PortugolParser.Valor_constanteContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PortugolParser#valor_constante}.
-	 * @param ctx the parse tree
-	 */
-	void exitValor_constante(@NotNull PortugolParser.Valor_constanteContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link PortugolParser#corpo}.

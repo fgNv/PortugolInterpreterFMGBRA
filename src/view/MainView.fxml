@@ -22,13 +22,10 @@
     </padding>
     <Label GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3">Portugol Parser</Label>
     
-    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="2">
+    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="2" GridPane.hgrow="always" GridPane.vgrow="always" >
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Código</Label>
-        <!--<TextArea fx:id="inputField" GridPane.rowIndex="1" GridPane.columnIndex="0"  GridPane.hgrow="always" GridPane.vgrow="always"/>-->
         <CodeArea fx:id="codeArea" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always"/>
     </GridPane>
-    
-    <!--<CodeArea />-->
     
     <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1">
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Erros</Label>

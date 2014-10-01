@@ -1,4 +1,4 @@
-// Generated from C:\Users\Felipe\Desktop\Trash\MiniPseudoCompiladorPortugol\src\Portugol.g4 by ANTLR 4.2.2
+// Generated from C:\Projects\PortugolInterpreterFMGBRA\src\Portugol.g4 by ANTLR 4.2.2
 package Antl4GeneratedMember;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -173,19 +173,6 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterItem_expressao(@NotNull PortugolParser.Item_expressaoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitItem_expressao(@NotNull PortugolParser.Item_expressaoContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterSe(@NotNull PortugolParser.SeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -245,19 +232,6 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitId(@NotNull PortugolParser.IdContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterValor_constante(@NotNull PortugolParser.Valor_constanteContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitValor_constante(@NotNull PortugolParser.Valor_constanteContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
