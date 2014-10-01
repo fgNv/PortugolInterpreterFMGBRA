@@ -23,7 +23,7 @@ public class PortugolParser extends Application {
         
         Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
     
-        Scene scene = new Scene(root, 900, 575);
+        Scene scene = new Scene(root, 1200, 675);
         
         primaryStage.setTitle("Portugol Parser");
         primaryStage.setScene(scene);

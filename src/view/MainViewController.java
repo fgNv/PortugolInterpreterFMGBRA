@@ -5,11 +5,10 @@
  */
 package view;
 
-import Antl4GeneratedMember.PortugolLexer;
 import domain.LanguageManager;
 import domain.Symbols;
+import domain.TokensProvider;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -45,24 +44,8 @@ public class MainViewController implements Initializable {
     @FXML
     public CodeArea codeArea;
     
-    private final Pattern keywordPattern = GetHighLightPattern();
+    private final Pattern keywordPattern = TokensProvider.getTokensPattern();
     
-    private Pattern GetHighLightPattern() {
-        List<String> tokens = new ArrayList<>();
-
-        for (String input : PortugolLexer.tokenNames) {
-            input = input.replace("'", "");
-            if(!input.contains("<") && !input.contains(">") && !input.contains("+") && !input.contains("-")
-               && !input.contains("*") && !input.contains("/") && !input.contains(":") && !input.contains(";")
-               && !input.contains(".")&& !input.contains(",")&& !input.contains("{")&& !input.contains("}")
-               && !input.contains("[")&& !input.contains("]")&& !input.contains("(")&& !input.contains(")")
-               && !input.contains("=")&& !input.contains("!") && !input.contains("%") && !input.contains("&")
-               && !input.contains("|")&& !input.contains("~"))
-            tokens.add(Matcher.quoteReplacement(input));
-        }
-        return Pattern.compile(String.join("|", tokens));
-    }
-
     private final LanguageManager manager = new LanguageManager();
 
     private Task<Void> buildUpdateTask(String newValue) {
@@ -76,6 +59,17 @@ public class MainViewController implements Initializable {
         };
         return task;
     }
+    
+    private Task<Void> buildHighlightTask(String newValue) {
+        Task<Void> task = new Task() {
+            @Override
+            protected Void call() throws Exception {
+                codeArea.setStyleSpans(0, computeHighlighting(newValue));
+                return null;
+            }
+        };
+        return task;
+    }
 
     private void SetupCodeArea() {
         String stylesheet = getClass().getResource("mainview.css").toExternalForm();
@@ -83,7 +77,8 @@ public class MainViewController implements Initializable {
 
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea, format, stylesheet));
         codeArea.textProperty().addListener((obs, oldText, newText) -> {
-            codeArea.setStyleSpans(0, computeHighlighting(newText));
+            Task<Void> task = buildHighlightTask(newText);
+            task.run();
         });
 
         codeArea.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
