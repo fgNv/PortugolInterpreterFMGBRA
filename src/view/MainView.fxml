@@ -27,14 +27,27 @@
         <CodeArea fx:id="codeArea" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always"/>
     </GridPane>
     
-    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1">
+    <GridPane GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="4" >
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Erros</Label>
         <ListView fx:id="errors" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always"/>
     </GridPane>
     
     <GridPane GridPane.rowIndex="1" GridPane.columnIndex="2">
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Funções</Label>
-        <ListView fx:id="functions" GridPane.rowIndex="1" GridPane.columnIndex="0"  GridPane.hgrow="always" GridPane.vgrow="always"/>
+        <TableView fx:id="functions" GridPane.rowIndex="1" GridPane.columnIndex="0"  GridPane.hgrow="always" GridPane.vgrow="always">
+            <columns>
+                <TableColumn text="Name" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="name" />
+                    </cellValueFactory>
+                </TableColumn>          
+                <TableColumn text="Type" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="type" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>    
+        </TableView>
     </GridPane>
     
     <GridPane GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2">

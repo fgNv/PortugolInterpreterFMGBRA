@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
 
-import java.util.List;
+package domain;
 
 /**
  *
  * @author Felipe
  */
-public class Symbols {
+public class Vector extends Variable {
 
-    public List<Variable> variables;
-    public List<Function> functions;
+    public Vector(String name, int scope, String type, String function) {
+        super(name, scope, type, function);
+    }
+    
 }

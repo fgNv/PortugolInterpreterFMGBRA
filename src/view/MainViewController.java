@@ -38,7 +38,7 @@ public class MainViewController implements Initializable {
     @FXML
     public ListView errors;
     @FXML
-    public ListView functions;
+    public TableView functions;
     @FXML
     public TableView variables;
     @FXML

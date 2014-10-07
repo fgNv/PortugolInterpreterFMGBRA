@@ -5,14 +5,14 @@
  */
 package domain;
 
-import java.util.List;
-
 /**
  *
  * @author Felipe
  */
-public class Symbols {
+public class Function extends BaseItem {
 
-    public List<Variable> variables;
-    public List<Function> functions;
+    public Function(String name, String type) {
+        setName(name);
+        setType(type);
+    }
 }
