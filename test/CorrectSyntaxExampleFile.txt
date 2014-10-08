@@ -13,6 +13,8 @@ programa
 
 		inteiro linhas = u.numero_linhas(mat)
 		inteiro colunas = u.numero_colunas(mat)
+                
+                linhas = 5
 
 		escreva("A matriz possui ", linhas, " linhas\n")
 		escreva("A matriz possui ", colunas, " colunas\n\n")

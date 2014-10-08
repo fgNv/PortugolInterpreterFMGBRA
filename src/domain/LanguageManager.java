@@ -32,7 +32,7 @@ public class LanguageManager {
     }
 
     public List<String> Validate(String input) {
-        
+
         List<String> result;
         result = new ArrayList<>();
 
@@ -52,24 +52,20 @@ public class LanguageManager {
 
     public ParserRuleContext GetTree(String input) {
         Tools tools = new Tools(input);
-        ParserRuleContext tree = tools.parser.programa(); 
+        ParserRuleContext tree = tools.parser.programa();
         return tree;
     }
-    
-    public Symbols GetVariableList(String input){
-        
+
+    public Symbols GetVariableList(String input) {
+
         GatherSymbolsListener gatherSymbolsListener = new GatherSymbolsListener();
         Tools tools = new Tools(input);
-        ParserRuleContext tree = tools.parser.programa(); 
-        
-        ParseTreeWalker walker = new ParseTreeWalker(); 
+        ParserRuleContext tree = tools.parser.programa();
+
+        ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(gatherSymbolsListener, tree);
-        
-        Symbols result = new Symbols();
-        result.variables = gatherSymbolsListener.variables;
-        result.functions = gatherSymbolsListener.functions;
-        
+
+        Symbols result = new Symbols(gatherSymbolsListener.variables, gatherSymbolsListener.functions, gatherSymbolsListener.parameters);
         return result;
     }
 }
-

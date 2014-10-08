@@ -43,6 +43,8 @@ public class MainViewController implements Initializable {
     public TableView variables;
     @FXML
     public CodeArea codeArea;
+    @FXML
+    public TableView parameters;
     
     private final Pattern keywordPattern = TokensProvider.getTokensPattern();
     
@@ -96,6 +98,7 @@ public class MainViewController implements Initializable {
         Symbols symbols = manager.GetVariableList(input);
         variables.setItems(FXCollections.observableList(symbols.variables));
         functions.setItems(FXCollections.observableList(symbols.functions));
+        parameters.setItems(FXCollections.observableList(symbols.parameters));
     }
 
     private void checarTretas(String input) {

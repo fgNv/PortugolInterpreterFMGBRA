@@ -22,7 +22,7 @@
     </padding>
     <Label GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3">Portugol Parser</Label>
     
-    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="2" GridPane.hgrow="always" GridPane.vgrow="always" >
+    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="3" GridPane.hgrow="always" GridPane.vgrow="always" >
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Código</Label>
         <CodeArea fx:id="codeArea" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always"/>
     </GridPane>
@@ -46,11 +46,16 @@
                         <PropertyValueFactory property="type" />
                     </cellValueFactory>
                 </TableColumn>
+                <TableColumn text="Is used" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="isUsed" />
+                    </cellValueFactory>
+                </TableColumn>
             </columns>    
         </TableView>
     </GridPane>
     
-    <GridPane GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2">
+    <GridPane GridPane.rowIndex="2" GridPane.columnIndex="2" >
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Variáveis</Label>
         <TableView fx:id="variables" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always">
             <columns>
@@ -72,6 +77,64 @@
                 <TableColumn text="Function" >
                     <cellValueFactory>
                         <PropertyValueFactory property="function" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Is initialized" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="isInitialized" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Is used" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="isUsed" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>    
+        </TableView>
+    </GridPane>
+    
+    <GridPane GridPane.rowIndex="3" GridPane.columnIndex="2" maxWidth="${variables.width}" >
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Parameters</Label>
+        <TableView fx:id="parameters" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always">
+            <columns>
+                <TableColumn text="Name" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="name" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Scope">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="scope" />
+                    </cellValueFactory>
+                </TableColumn>          
+                <TableColumn text="Type" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="type" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Function" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="function" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Is initialized" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="isInitialized" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Is used" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="isUsed" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Is reference" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="isReference" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Position" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="parameterPosition" />
                     </cellValueFactory>
                 </TableColumn>
             </columns>    

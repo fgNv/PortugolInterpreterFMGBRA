@@ -41,7 +41,7 @@ VALOR_CONSTANTE : INTEIRO | REAL | CARACTER | CADEIA | LOGICO ;
 se : SE '(' expressao ')' bloco (SENAO bloco)?;
 faca : FACA bloco ENQUANTO '(' expressao ')';
 enquanto : ENQUANTO '(' expressao ')' bloco;
-para : PARA '('contador_para? (',' contador_para)* ';' expressao? ';' atribuicao? (',' atribuicao)* ')' bloco;
+para : PARA '('contador_para? (',' contador_para)* ';' expressao? ';' alteracaoValorVariavel? (',' alteracaoValorVariavel)* ')' bloco;
 
 contador_para : tipo ID '=' expressao;
 
@@ -49,12 +49,13 @@ escolha : ESCOLHA'('expressao')''{' caso* (CASO CONTRARIO ':' comando*)? '}';
 caso : CASO VALOR_CONSTANTE ':' comando* PARE?;
 
 bloco : '{' comando* '}' | comando;
-comando : (dec_var | enquanto | atribuicao | se | chamada_funcao | faca | escolha | retorno | para | leia | escreva | LIMPA'('')' );
+comando : (dec_var | enquanto | alteracaoValorVariavel | se | chamada_funcao | faca | escolha | retorno | para | leia | escreva | LIMPA'('')' );
 chamada_funcao : (ID | ID'.'ID ) '(' lista_param? ')';
 lista_param : valor (',' valor)* ;
 retorno : RETORNE expressao;
 
-atribuicao : id ('=' | '+=' | '-=' | '/=' | '*=' | '%=') expressao | id'++' | id'--';
+alteracaoValorVariavel : atribuicao | id'++' | id'--';
+atribuicao : id ('=' | '+=' | '-=' | '/=' | '*=' | '%=') expressao;
 operador : SOMA | SUBTRACAO | DIVISAO | MULTIPLICACAO | MAIOR | MENOR | MAIOR_IGUAL | MENOR_IGUAL | DIFERENTE; 
 
 /*
@@ -156,7 +157,6 @@ CADEIA : '"' (. | '\"' | ESCAPES)*? '"' ;
 CARACTER : '\'' (. | ESCAPES | '\'' )? '\'';
 LOGICO : 'verdadeiro' | 'falso';
 
-
 fragment
 ESCAPES : '\b' | '\n' | '\t' | '\f' | '\r' | '\\';
 
@@ -175,6 +175,5 @@ ALIAS_BIBLIOTECA : '-->';
 */
 LINE_COMMENT : '//' .*? '\r'? '\n' -> skip ;
 COMMENT : '/*' .*? '*/' -> skip;
-
 
 WS : [ \r\t\n]+ -> skip ;
