@@ -174,6 +174,17 @@ public interface PortugolListener extends ParseTreeListener {
 	void exitCaso(@NotNull PortugolParser.CasoContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link PortugolParser#alteracaoValorVariavel}.
+	 * @param ctx the parse tree
+	 */
+	void enterAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PortugolParser#alteracaoValorVariavel}.
+	 * @param ctx the parse tree
+	 */
+	void exitAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link PortugolParser#comando}.
 	 * @param ctx the parse tree
 	 */
@@ -238,17 +249,6 @@ public interface PortugolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDec_item_param(@NotNull PortugolParser.Dec_item_paramContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link PortugolParser#valor}.
-	 * @param ctx the parse tree
-	 */
-	void enterValor(@NotNull PortugolParser.ValorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PortugolParser#valor}.
-	 * @param ctx the parse tree
-	 */
-	void exitValor(@NotNull PortugolParser.ValorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link PortugolParser#escreva}.
@@ -370,6 +370,17 @@ public interface PortugolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitChamada_funcao(@NotNull PortugolParser.Chamada_funcaoContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link PortugolParser#chamada_funcao_biblioteca}.
+	 * @param ctx the parse tree
+	 */
+	void enterChamada_funcao_biblioteca(@NotNull PortugolParser.Chamada_funcao_bibliotecaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PortugolParser#chamada_funcao_biblioteca}.
+	 * @param ctx the parse tree
+	 */
+	void exitChamada_funcao_biblioteca(@NotNull PortugolParser.Chamada_funcao_bibliotecaContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link PortugolParser#operador}.

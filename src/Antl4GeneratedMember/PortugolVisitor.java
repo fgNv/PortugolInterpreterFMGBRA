@@ -117,6 +117,13 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitCaso(@NotNull PortugolParser.CasoContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link PortugolParser#alteracaoValorVariavel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link PortugolParser#comando}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -157,13 +164,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDec_item_param(@NotNull PortugolParser.Dec_item_paramContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#valor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitValor(@NotNull PortugolParser.ValorContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#escreva}.
@@ -241,6 +241,13 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitChamada_funcao(@NotNull PortugolParser.Chamada_funcaoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#chamada_funcao_biblioteca}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChamada_funcao_biblioteca(@NotNull PortugolParser.Chamada_funcao_bibliotecaContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#operador}.

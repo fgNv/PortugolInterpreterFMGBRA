@@ -10,10 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import Antl4GeneratedMember.PortugolBaseListener;
 import Antl4GeneratedMember.PortugolParser;
+import Antl4GeneratedMember.PortugolParser.Chamada_funcaoContext;
+import Antl4GeneratedMember.PortugolParser.IdContext;
 import domain.Function;
 import domain.Parameter;
 import java.util.Optional;
 import java.util.Stack;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
  *
@@ -24,6 +27,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
     public final List<Variable> variables = new ArrayList<>();
     public final List<Function> functions = new ArrayList<>();
     public final List<Parameter> parameters = new ArrayList<>();
+    public final List<String> errors = new ArrayList<>();
     private int currentScopeId;
     private int currentParamCount;
     private String currentType;
@@ -36,6 +40,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
     }
 
     public class Scope {
+
         public String functionName;
         public int scopeDepth;
         public int scopeId;
@@ -50,27 +55,28 @@ public class GatherSymbolsListener extends PortugolBaseListener {
     @Override
     public void enterItem_var(PortugolParser.Item_varContext ctx) {
         Variable var = new Variable(ctx.ID(0).getText(), scopeStack.peek().scopeId, currentType, scopeStack.peek().functionName);
-        if(ctx.getText().contains("="))
+        if (ctx.getText().contains("=")) {
             var.setIsInitialized(true);
-        
+        }
+
         variables.add(var);
     }
-    
+
     @Override
     public void enterDec_item_param(PortugolParser.Dec_item_paramContext ctx) {
         Parameter var = new Parameter(ctx.ID().getText(), scopeStack.peek().scopeId, ctx.tipo().getText(), scopeStack.peek().functionName, currentParamCount);
 
         String cxtText = ctx.getText();
-        
+
         currentParamCount++;
         if (cxtText.contains("&")) {
             var.setIsReference(true);
         }
 
-        if(cxtText.contains("=")){
+        if (cxtText.contains("=")) {
             var.setIsInitialized(true);
         }
-        
+
         parameters.add(var);
     }
 
@@ -79,27 +85,74 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         currentParamCount = 0;
     }
 
+    private void verifyVariableIsInitialized(String alteredVariableName, List<? extends Variable> analysedVariables) {
+        int scopeId = scopeStack.peek().scopeId;
+        Optional<? extends Variable> alteredVariable = analysedVariables.stream()
+                .filter(i -> i.getName().equals(alteredVariableName) && i.getScope() == scopeId)
+                .findFirst();
+
+        if (alteredVariable.isPresent()) {
+            alteredVariable.get().setIsInitialized(true);
+        }
+    }
+
     @Override
     public void enterAtribuicao(PortugolParser.AtribuicaoContext ctx) {
         String alteredVariableName = ctx.id().getText();
+        verifyVariableIsInitialized(alteredVariableName, variables);
+        verifyVariableIsInitialized(alteredVariableName, parameters);
+    }
+
+    private void checkIfVariableIsUsed(IdContext id, List<? extends Variable> analysedVariables) {
+        String variableName = id.getText();
         int scopeId = scopeStack.peek().scopeId;
-        Optional<Variable> alteredVariable = variables.stream()
-                                                      .filter( i -> i.getName().equals(alteredVariableName) && i.getScope() == scopeId)
-                                                      .findFirst();
-        
-        if(alteredVariable.isPresent()){
-            alteredVariable.get().setIsInitialized(true);
+        Optional<? extends Variable> alteredVariable = analysedVariables.stream()
+                .filter(i -> i.getName().equals(variableName) && i.getScope() == scopeId)
+                .findFirst();
+
+        if (alteredVariable.isPresent()) {
+            alteredVariable.get().setIsUsed(true);
+        }
+    }
+
+    private void checkIfFunctionIsUsed(Chamada_funcaoContext functionCall) {
+        TerminalNode currentProgramFunctionCall = functionCall.ID();
+        if (currentProgramFunctionCall == null) {
             return;
         }
-        
-        Optional<Parameter> alteredParameter = parameters.stream()
-                                                         .filter( i -> i.getName().equals(alteredVariableName) && i.getScope() == scopeId)
-                                                         .findFirst();
-        
-        if(alteredParameter.isPresent())
-            alteredParameter.get().setIsInitialized(true);
+
+        String functionName = currentProgramFunctionCall.getText();
+        Optional<Function> usedFunction = functions.stream()
+                .filter(i -> i.getName().equals(functionName))
+                .findFirst();
+
+        if (usedFunction.isPresent()) {
+            usedFunction.get().setIsUsed(true);
+        }
     }
-    
+
+    @Override
+    public void enterOperando(PortugolParser.OperandoContext ctx) {
+        IdContext id = ctx.id();
+        Chamada_funcaoContext chamadaFuncao = ctx.chamada_funcao();
+
+        if (id != null) {
+            checkIfVariableIsUsed(id, parameters);
+            checkIfVariableIsUsed(id, variables);
+        } else if (chamadaFuncao != null) {
+            checkIfFunctionIsUsed(chamadaFuncao);
+        }
+    }
+
+    @Override
+    public void enterChamada_funcao(Chamada_funcaoContext ctx) {
+        TerminalNode id = ctx.ID();
+        if (id == null) {
+            return;
+        }
+        checkIfFunctionIsUsed(ctx);
+    }
+
     @Override
     public void enterDec_var(PortugolParser.Dec_varContext ctx) {
         currentType = ctx.tipo().getText();
@@ -142,5 +195,4 @@ public class GatherSymbolsListener extends PortugolBaseListener {
     public void exitDec_funcao(PortugolParser.Dec_funcaoContext ctx) {
         scopeStack.pop();
     }
-    
 }

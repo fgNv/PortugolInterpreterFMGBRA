@@ -17,17 +17,21 @@ import java.util.regex.Pattern;
  */
 public class TokensProvider {
 
+    private static boolean isAcceptableInput(String input){
+        return !input.contains("<") && !input.contains(">") && !input.contains("+") && !input.contains("-")
+                    && !input.contains("*") && !input.contains("/") && !input.contains(":") && !input.contains(";")
+                    && !input.contains(".") && !input.contains(",") && !input.contains("{") && !input.contains("}")
+                    && !input.contains("[") && !input.contains("]") && !input.contains("(") && !input.contains(")")
+                    && !input.contains("=") && !input.contains("!") && !input.contains("%") && !input.contains("&")
+                    && !input.contains("|") && !input.contains("~") && !input.equals("e") && !input.equals("ou");
+    }
+    
     private static List<String> getTokens() {
         List<String> tokens = new ArrayList<>();
         
         for (String input : PortugolLexer.tokenNames) {
             input = input.replace("'", "");
-            if (!input.contains("<") && !input.contains(">") && !input.contains("+") && !input.contains("-")
-                    && !input.contains("*") && !input.contains("/") && !input.contains(":") && !input.contains(";")
-                    && !input.contains(".") && !input.contains(",") && !input.contains("{") && !input.contains("}")
-                    && !input.contains("[") && !input.contains("]") && !input.contains("(") && !input.contains(")")
-                    && !input.contains("=") && !input.contains("!") && !input.contains("%") && !input.contains("&")
-                    && !input.contains("|") && !input.contains("~")) {
+            if (isAcceptableInput(input)) {
                 tokens.add(Matcher.quoteReplacement(input));
             }
         }

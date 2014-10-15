@@ -19,7 +19,7 @@ dec_item_param: tipo '&'? ID;
 
 dec_funcao : FUNCAO (tipo | 'vazio')? ID '(' dec_lista_param? ')' bloco;
 
-operando : id | valor | chamada_funcao;
+operando : id | VALOR_CONSTANTE | chamada_funcao;
 
 expressao : (NAO | NAO_BINARIO ) '(' expressao ')' |
                   expressao ('*' | '/' | '%') expressao  |
@@ -35,7 +35,7 @@ expressao : (NAO | NAO_BINARIO ) '(' expressao ')' |
 
 tipo : INTEIRO_DECLARACAO | REAL_DECLARACAO | CARACTER_DECLARACAO | CADEIA_DECLARACAO | LOGICO_DECLARACAO;
 id : ID ('[' expressao ']')*;
-valor : VALOR_CONSTANTE | chamada_funcao | id;
+
 VALOR_CONSTANTE : INTEIRO | REAL | CARACTER | CADEIA | LOGICO ;
 
 se : SE '(' expressao ')' bloco (SENAO bloco)?;
@@ -50,8 +50,9 @@ caso : CASO VALOR_CONSTANTE ':' comando* PARE?;
 
 bloco : '{' comando* '}' | comando;
 comando : (dec_var | enquanto | alteracaoValorVariavel | se | chamada_funcao | faca | escolha | retorno | para | leia | escreva | LIMPA'('')' );
-chamada_funcao : (ID | ID'.'ID ) '(' lista_param? ')';
-lista_param : valor (',' valor)* ;
+chamada_funcao : (ID | chamada_funcao_biblioteca ) '(' lista_param? ')';
+chamada_funcao_biblioteca : ID'.'ID;
+lista_param : expressao (',' expressao)* ;
 retorno : RETORNE expressao;
 
 alteracaoValorVariavel : atribuicao | id'++' | id'--';
