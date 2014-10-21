@@ -1,0 +1,12 @@
+programa{
+
+    funcao oi(){
+
+        inteiro oi
+        
+        vish = oi + 5
+        oi = oi + ola
+        
+        qisso()    
+    }
+}

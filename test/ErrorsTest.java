@@ -12,9 +12,9 @@ import org.junit.Test;
  */
 public class ErrorsTest {    
     @Test
-    public void correctSyntaxInput() throws IOException {
+    public void correctSyntaxInput() throws IOException {        
         LanguageManager manager = new LanguageManager();
-        URL url = getClass().getResource("CorrectSyntaxExampleFile.txt");
+        URL url = getClass().getResource("CorrectSyntax.txt");
         String input = FileHelper.GetStringFromFile(url.getPath());
         List<String> errors;
         errors = manager.Validate(input);
@@ -25,7 +25,7 @@ public class ErrorsTest {
     @Test
     public void incorrectLibrarySyntaxInput() throws IOException {
         LanguageManager manager = new LanguageManager();
-        URL url = getClass().getResource("IncorrectLibrarySyntaxExampleFile.txt");
+        URL url = getClass().getResource("IncorrectLibrarySyntax.txt");
         String input = FileHelper.GetStringFromFile(url.getPath());
         List<String> errors;
         errors = manager.Validate(input);

@@ -1,0 +1,17 @@
+programa{
+    funcao teste(){
+        faca{
+            inteiro uuu
+
+            uuu = 5 + 5
+        }enquanto(verdadeiro)
+
+        uuu = 5
+    }
+
+    funcao ae(){
+        inteiro qisso = 5
+        uuu = 3
+        qisso = 3 + uuu
+    }
+}

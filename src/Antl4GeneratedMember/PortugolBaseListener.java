@@ -17,6 +17,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDecVetor(@NotNull PortugolParser.DecVetorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecVetor(@NotNull PortugolParser.DecVetorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLista_param(@NotNull PortugolParser.Lista_paramContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -56,6 +69,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterId_consumo(@NotNull PortugolParser.Id_consumoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitId_consumo(@NotNull PortugolParser.Id_consumoContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEnquanto(@NotNull PortugolParser.EnquantoContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -76,6 +102,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBiblioteca(@NotNull PortugolParser.BibliotecaContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOperador_bit(@NotNull PortugolParser.Operador_bitContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperador_bit(@NotNull PortugolParser.Operador_bitContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -134,6 +173,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOperador_e_logico(@NotNull PortugolParser.Operador_e_logicoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperador_e_logico(@NotNull PortugolParser.Operador_e_logicoContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDeclaracoes(@NotNull PortugolParser.DeclaracoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -141,19 +193,6 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDeclaracoes(@NotNull PortugolParser.DeclaracoesContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterItem_var(@NotNull PortugolParser.Item_varContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitItem_var(@NotNull PortugolParser.Item_varContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -186,6 +225,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOperador_aritmetico_secundario(@NotNull PortugolParser.Operador_aritmetico_secundarioContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperador_aritmetico_secundario(@NotNull PortugolParser.Operador_aritmetico_secundarioContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPara(@NotNull PortugolParser.ParaContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -206,6 +258,32 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCaso(@NotNull PortugolParser.CasoContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOperador_comparacao_secundario(@NotNull PortugolParser.Operador_comparacao_secundarioContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperador_comparacao_secundario(@NotNull PortugolParser.Operador_comparacao_secundarioContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOperador_ou_logico(@NotNull PortugolParser.Operador_ou_logicoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperador_ou_logico(@NotNull PortugolParser.Operador_ou_logicoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -238,13 +316,52 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterId(@NotNull PortugolParser.IdContext ctx) { }
+	@Override public void enterOperador_e_binario(@NotNull PortugolParser.Operador_e_binarioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitId(@NotNull PortugolParser.IdContext ctx) { }
+	@Override public void exitOperador_e_binario(@NotNull PortugolParser.Operador_e_binarioContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOperador_aritmetico_prioritario(@NotNull PortugolParser.Operador_aritmetico_prioritarioContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperador_aritmetico_prioritario(@NotNull PortugolParser.Operador_aritmetico_prioritarioContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterValor_constante(@NotNull PortugolParser.Valor_constanteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValor_constante(@NotNull PortugolParser.Valor_constanteContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParam_funcao(@NotNull PortugolParser.Param_funcaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParam_funcao(@NotNull PortugolParser.Param_funcaoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -284,6 +401,32 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLeia(@NotNull PortugolParser.LeiaContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOperador_ou_binario(@NotNull PortugolParser.Operador_ou_binarioContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperador_ou_binario(@NotNull PortugolParser.Operador_ou_binarioContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDecVar(@NotNull PortugolParser.DecVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecVar(@NotNull PortugolParser.DecVarContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -336,6 +479,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBibliotecas(@NotNull PortugolParser.BibliotecasContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOperador_comparacao_prioritario(@NotNull PortugolParser.Operador_comparacao_prioritarioContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperador_comparacao_prioritario(@NotNull PortugolParser.Operador_comparacao_prioritarioContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -414,6 +570,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFaca(@NotNull PortugolParser.FacaContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDimensao(@NotNull PortugolParser.DimensaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDimensao(@NotNull PortugolParser.DimensaoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

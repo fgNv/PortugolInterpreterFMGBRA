@@ -1,0 +1,12 @@
+programa{
+
+    funcao inteiro calcular(cadeia primeiro, inteiro segundo){
+
+    }
+
+    funcao inicio(){
+        inteiro ola
+        ola = calcular(1,2)
+    }
+
+}

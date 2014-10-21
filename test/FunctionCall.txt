@@ -1,0 +1,11 @@
+programa{
+
+    funcao inteiro calc(inteiro teste, cadeia str){
+        retorne 0
+    }
+
+    funcao init(){
+        calc(2,3)
+    }
+
+}

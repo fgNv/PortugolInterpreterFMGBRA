@@ -99,12 +99,13 @@ public class MainViewController implements Initializable {
         variables.setItems(FXCollections.observableList(symbols.variables));
         functions.setItems(FXCollections.observableList(symbols.functions));
         parameters.setItems(FXCollections.observableList(symbols.parameters));
+        errors.setItems(FXCollections.observableList(symbols.errors));
     }
 
     private void checarTretas(String input) {
         List<String> errorsList;
         errorsList = manager.Validate(input);
-        this.errors.setItems(FXCollections.observableList(errorsList));
+        errors.getItems().addAll(errorsList);
     }
 
     private StyleSpans<Collection<String>> computeHighlighting(String text) {

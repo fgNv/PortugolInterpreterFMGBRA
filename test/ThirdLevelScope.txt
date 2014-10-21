@@ -1,0 +1,23 @@
+programa{
+    
+    inteiro oi
+
+    funcao teste(){
+        real ae
+
+        faca{
+            cadeia vish
+            
+            se(verdadeiro){
+                caracter olar
+            }
+            
+        }enquanto(verdadeiro)
+
+    }
+
+    funcao inteiro mais(cadeia parametro){
+        inteiro teste
+    }
+
+}

@@ -1,0 +1,12 @@
+programa{
+    
+    funcao cadeia qisso(){
+        retorne 'O' 
+    }
+
+    funcao inicio(){
+        inteiro oi
+        oi = qisso()
+    }
+
+}

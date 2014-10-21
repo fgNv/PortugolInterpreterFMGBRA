@@ -12,8 +12,18 @@ package domain;
  */
 public class Vector extends Variable {
 
-    public Vector(String name, int scope, String type, String function) {
+    private int dimensions;
+
+    public Vector(int dimensions, String name, int scope, String type, String function) {
         super(name, scope, type, function);
+        this.dimensions = dimensions;
     }
-    
+
+    public int getDimensions() {
+        return dimensions;
+    }
+
+    public void setDimensions(int dimensions) {
+        this.dimensions = dimensions;
+    }
 }

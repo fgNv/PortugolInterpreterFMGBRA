@@ -65,7 +65,7 @@ public class LanguageManager {
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(gatherSymbolsListener, tree);
 
-        Symbols result = new Symbols(gatherSymbolsListener.variables, gatherSymbolsListener.functions, gatherSymbolsListener.parameters);
+        Symbols result = new Symbols(gatherSymbolsListener.variables, gatherSymbolsListener.functions, gatherSymbolsListener.parameters,gatherSymbolsListener.errors);
         return result;
     }
 }

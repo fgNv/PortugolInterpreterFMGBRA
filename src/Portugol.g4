@@ -7,36 +7,51 @@ biblioteca : INCLUA BIBLIOTECA ID ('-->' ID)?;
 
 declaracoes : (dec_funcao | dec_var | dec_constante)*;
 
-item_var : ID ('=' expressao)? | ID('[' (INTEIRO | ID )? ']')+ ('=' inicializacao_vetor)? ;
+dimensao : '[' (INTEIRO | id_consumo )? ']';
+
+item_var : ID ('=' expressao)?  #decVar | 
+           ID dimensao+ ('=' inicializacao_vetor)?  #decVetor ;
 lista_var : item_var (',' item_var)*;
 dec_var : tipo lista_var ;
-inicializacao_vetor: '{' inicializacao_vetor (',' inicializacao_vetor)* '}' | '{' VALOR_CONSTANTE (',' VALOR_CONSTANTE)* '}';
+inicializacao_vetor: '{' inicializacao_vetor (',' inicializacao_vetor)* '}' | '{' valor_constante (',' valor_constante)* '}';
 
-dec_constante : CONST tipo ID '=' VALOR_CONSTANTE;
+dec_constante : CONST tipo ID '=' valor_constante;
 
 dec_lista_param : dec_item_param (',' dec_item_param)*;
 dec_item_param: tipo '&'? ID;
 
 dec_funcao : FUNCAO (tipo | 'vazio')? ID '(' dec_lista_param? ')' bloco;
 
-operando : id | VALOR_CONSTANTE | chamada_funcao;
+operando : id_consumo | valor_constante | chamada_funcao;
 
 expressao : (NAO | NAO_BINARIO ) '(' expressao ')' |
-                  expressao ('*' | '/' | '%') expressao  |
-                  expressao ('+' | '-') expressao  |
-                  expressao ('<<' | '>>') expressao |
-                  expressao ('<'  | '<=' | '>' | '>=') expressao |
-                  expressao ('=='  | '!=' ) expressao |
-                  expressao '&' expressao |
-                  expressao '|' expressao |
-                  expressao 'e' expressao |
-                  expressao 'ou' expressao |
+                  expressao operador_aritmetico_prioritario expressao |
+                  expressao (operador_aritmetico_secundario_concatenacao | operador_aritmetico_secundario) expressao  |
+                  expressao operador_bit expressao |
+                  expressao operador_comparacao_prioritario expressao |
+                  expressao operador_comparacao_secundario expressao |
+                  expressao operador_e_binario expressao |
+                  expressao operador_ou_binario expressao |
+                  expressao operador_e_logico expressao |
+                  expressao operador_ou_logico expressao |
                   operando | '(' expressao ')' ;   
 
-tipo : INTEIRO_DECLARACAO | REAL_DECLARACAO | CARACTER_DECLARACAO | CADEIA_DECLARACAO | LOGICO_DECLARACAO;
-id : ID ('[' expressao ']')*;
+operador_aritmetico_prioritario : ('*' | '/' | '%');
+operador_aritmetico_secundario_concatenacao : '+';
+operador_aritmetico_secundario : '-';
+operador_bit : ('<<' | '>>');
+operador_comparacao_prioritario : ('<'  | '<=' | '>' | '>=');
+operador_comparacao_secundario : ('!='  | '==' );
+operador_e_binario : ('&' );
+operador_ou_binario : ('|' );
+operador_e_logico : ('e' );
+operador_ou_logico : ('ou' );
 
-VALOR_CONSTANTE : INTEIRO | REAL | CARACTER | CADEIA | LOGICO ;
+
+tipo : INTEIRO_DECLARACAO | REAL_DECLARACAO | CARACTER_DECLARACAO | CADEIA_DECLARACAO | LOGICO_DECLARACAO;
+id_consumo : ID ('[' expressao ']')*;
+
+valor_constante : INTEIRO | REAL | CARACTER | CADEIA | LOGICO ;
 
 se : SE '(' expressao ')' bloco (SENAO bloco)?;
 faca : FACA bloco ENQUANTO '(' expressao ')';
@@ -46,17 +61,17 @@ para : PARA '('contador_para? (',' contador_para)* ';' expressao? ';' alteracaoV
 contador_para : tipo ID '=' expressao;
 
 escolha : ESCOLHA'('expressao')''{' caso* (CASO CONTRARIO ':' comando*)? '}';
-caso : CASO VALOR_CONSTANTE ':' comando* PARE?;
+caso : CASO valor_constante ':' comando* PARE?;
 
 bloco : '{' comando* '}' | comando;
 comando : (dec_var | enquanto | alteracaoValorVariavel | se | chamada_funcao | faca | escolha | retorno | para | leia | escreva | LIMPA'('')' );
-chamada_funcao : (ID | chamada_funcao_biblioteca ) '(' lista_param? ')';
-chamada_funcao_biblioteca : ID'.'ID;
-lista_param : expressao (',' expressao)* ;
+chamada_funcao : (id_consumo | chamada_funcao_biblioteca ) param_funcao;
+chamada_funcao_biblioteca : id_consumo'.'ID ;
+param_funcao: '(' expressao (',' expressao)* ')'; 
 retorno : RETORNE expressao;
 
-alteracaoValorVariavel : atribuicao | id'++' | id'--';
-atribuicao : id ('=' | '+=' | '-=' | '/=' | '*=' | '%=') expressao;
+alteracaoValorVariavel : atribuicao | id_consumo'++' | id_consumo'--';
+atribuicao : id_consumo ('=' | '+=' | '-=' | '/=' | '*=' | '%=') expressao;
 operador : SOMA | SUBTRACAO | DIVISAO | MULTIPLICACAO | MAIOR | MENOR | MAIOR_IGUAL | MENOR_IGUAL | DIFERENTE; 
 
 /*
@@ -103,6 +118,7 @@ leia: LEIA'(' ID (',' ID)* ')';
 ESCREVA : 'escreva';
 escreva:  ESCREVA '(' lista_param ')';
 LIMPA : 'limpa';
+lista_param : expressao (',' expressao)* ;
 
 /*
 * Operadores Aritméticos
