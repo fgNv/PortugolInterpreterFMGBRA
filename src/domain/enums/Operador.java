@@ -12,6 +12,7 @@ package domain.enums;
 public enum Operador {
 
     aritmetico,
+    aritmeticoConcatenacao,
     logico,
     bit,
     comparacao,

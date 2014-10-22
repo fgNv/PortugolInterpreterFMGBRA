@@ -6,14 +6,15 @@ import java.util.List;
 import Antl4GeneratedMember.PortugolBaseListener;
 import Antl4GeneratedMember.PortugolParser;
 import Antl4GeneratedMember.PortugolParser.Chamada_funcaoContext;
+import domain.ExpressionTypeResolver;
 import domain.Function;
 import domain.Parameter;
-import domain.Tipos;
 import domain.Vector;
+import domain.enums.EnumHelper;
+import domain.enums.Tipo;
 import helpers.ObjectRetriever;
 import java.util.Optional;
 import java.util.Stack;
-import java.util.stream.Collectors;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
@@ -87,15 +88,15 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         parameters.add(var);
     }
 
-    private boolean isThereAFunctionCalled(String name) {
+    public boolean isThereAFunctionCalled(String name) {
         return functions.stream().anyMatch((v) -> v.getName().equals(name));
     }
 
-    private boolean isThereAVariableCurrentScopeCalled(String name) {
+    public boolean isThereAVariableCurrentScopeCalled(String name) {
         return variables.stream().anyMatch((v) -> v.getName().equals(name) && v.getScope() == scopeStack.peek().scopeId);
     }
 
-    private boolean isThereAParamCalled(String name) {
+    public boolean isThereAParamCalled(String name) {
         return parameters.stream().anyMatch((v) -> v.getName().equals(name) && v.getFunction().equals(currentFunctionName));
     }
 
@@ -160,7 +161,8 @@ public class GatherSymbolsListener extends PortugolBaseListener {
 
         Variable variable = o.getItemByName(variableName, variables);
         String expectedType = variable.getType();
-        String givenType = getExpressionType(ctx.expressao(), null);
+        ExpressionTypeResolver expressionTypeResolver = new ExpressionTypeResolver(); 
+        String givenType = EnumHelper.asString(expressionTypeResolver.getExpressionType(ctx.expressao(), this));
 
         if (givenType != null && !expectedType.equals(givenType)) {
             errors.add("tipo esperado era \" " + expectedType + " \", \"" + givenType + "\" fornecido");
@@ -200,19 +202,19 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         }
     }
 
-    private String getFunctionType(String name) {
+    public Tipo getFunctionType(String name) {
         Optional<Function> func = functions.stream()
                 .filter(x -> x.getName().equals(name))
                 .findFirst();
 
         if (func.isPresent()) {
-            return func.get().getType();
+            return EnumHelper.TipoFromString(func.get().getType());
         }
 
         throw new RuntimeException("At \"getFunctionType\" function \"" + name + "\" was not found");
     }
 
-    private String getVariableType(String name) {
+    public String getVariableType(String name) {
         Optional<Variable> variable = variables.stream()
                 .filter(i -> i.getName().equals(name))
                 .findFirst();
@@ -224,7 +226,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         throw new RuntimeException("Variable \"" + name + "\" not found at \"getVariableTypes\"");
     }
 
-    private String getParamType(String name) {
+    public String getParamType(String name) {
         Optional<Parameter> parameter = parameters.stream()
                 .filter(i -> i.getName().equals(name) && i.getFunction().equals(currentFunctionName))
                 .findFirst();
@@ -234,120 +236,6 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         }
 
         throw new RuntimeException("Parameter \"" + name + "\" for function \"" + currentFunctionName + "\" not found at \"getVariableTypes\"");
-    }
-
-    private String getValorConstanteType(PortugolParser.Valor_constanteContext ctx) {
-        if (ctx.CADEIA() != null) {
-            return "cadeia";
-        }
-        if (ctx.CARACTER() != null) {
-            return "caracter";
-        }
-        if (ctx.INTEIRO() != null) {
-            return "inteiro";
-        }
-        if (ctx.LOGICO() != null) {
-            return "logico";
-        }
-        if (ctx.REAL() != null) {
-            return "real";
-        }
-
-        return null;
-    }
-
-    private String getOperandoType(PortugolParser.OperandoContext ctx) {
-        if (ctx.chamada_funcao() != null) {
-            String funcName = ctx.chamada_funcao().id_consumo().getText();
-            return getFunctionType(funcName);
-        }
-
-        if (ctx.id_consumo() != null) {
-            String idName = ctx.id_consumo().getText();
-
-            if (isThereAParamCalled(idName)) {
-                return getParamType(idName);
-            }
-
-            if (isThereAVariableCurrentScopeCalled(idName)) {
-                return getVariableType(idName);
-            }
-
-            return null;
-        }
-
-        return getValorConstanteType(ctx.valor_constante());
-    }
-
-    private String getTipoOperador(PortugolParser.ExpressaoContext ctx) {
-        if (ctx.operador_aritmetico_prioritario() != null || ctx.operador_aritmetico_secundario() != null) {
-            return "aritmetico";
-        } else if (ctx.operador_bit() != null) {
-            return "bit";
-        } else if (ctx.operador_comparacao_prioritario() != null || ctx.operador_comparacao_secundario() != null) {
-            return "comparacao";
-        } else if (ctx.operador_e_binario() != null || ctx.operador_ou_binario() != null) {
-            return "binario";
-        } else if (ctx.operador_e_logico() != null || ctx.operador_ou_logico() != null) {
-            return "logico";
-        }
-
-        throw new RuntimeException("Tipo não encontrado em getTipoOperador");
-    }
-
-    private String getTypeResult(String tipoOperando, String operador) {
-        if (tipoOperando == null || operador == null) {
-            return tipoOperando;
-        }
-        if ((operador.equals("aritmetico") || operador.equals("aritmeticoConcatenacao"))
-                && (tipoOperando.equals(Tipos.INTEIRO) || tipoOperando.equals(Tipos.REAL))) {
-            return tipoOperando;
-        } else if (operador.equals("comparacao") && (tipoOperando.equals(Tipos.INTEIRO) || tipoOperando.equals(Tipos.REAL))) {
-            return Tipos.LOGICO;
-        } else if (operador.equals("aritmeticoConcatenacao") && (tipoOperando.equals(Tipos.CARACTER) || tipoOperando.equals(Tipos.CADEIA))) {
-            return Tipos.CARACTER;
-        } else if (operador.equals("logico") && tipoOperando.equals(Tipos.LOGICO)) {
-            return Tipos.LOGICO;
-        }
-
-        errors.add("Operando \"" + tipoOperando + "\" com operador \"" + operador + "\" é uma expressão inválida");
-        return null;
-    }
-
-    private String getExpressionType(PortugolParser.ExpressaoContext ctx, String tipoOperadorArg) {
-
-        if (ctx.operando() != null) {
-            String operandoType = getOperandoType(ctx.operando());
-            return getTypeResult(operandoType, tipoOperadorArg);
-        }
-
-        String tipoOperador = getTipoOperador(ctx);
-
-        List<String> types = ctx.expressao().stream().map(e -> getExpressionType(e, tipoOperador)).collect(Collectors.toList());
-
-        if (types.isEmpty()) {
-            throw new RuntimeException("No types found at \"getExpressionType\"");
-        }
-
-        if (types.stream().anyMatch(i -> i == null)) {
-            return null;
-        }
-
-        String firstType = types.get(0);
-        if (types.stream().allMatch(i -> firstType.equals(i))) {
-            return firstType;
-        }
-
-        if (types.stream().allMatch(i -> i.equals(Tipos.CADEIA) || i.equals(Tipos.CARACTER))) {
-            return Tipos.CADEIA;
-        }
-
-        if (types.stream().allMatch(i -> i.equals(Tipos.REAL) || i.equals(Tipos.INTEIRO))) {
-            return Tipos.REAL;
-        }
-
-        errors.add("Expressão com tipos incompatíveis");
-        return null;
     }
 
     @Override
@@ -373,8 +261,6 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         }
 
         ctx.param_funcao().expressao();
-
-        //throw new RuntimeException("Not implemented");
     }
 
     @Override
