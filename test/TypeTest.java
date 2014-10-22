@@ -4,11 +4,6 @@ import java.io.IOException;
 import junit.framework.Assert;
 import org.junit.Test;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author Felipe
@@ -45,5 +40,30 @@ public class TypeTest {
         GatherSymbolsListener listener = helper.getListener("ComplexBoolExpression.txt", () -> new GatherSymbolsListener());
         
         Assert.assertEquals(0, listener.errors.size());        
+    }
+    
+    
+    @Test 
+    public void MultipleLevelArithmeticExpressionEvaluation() throws IOException{
+        TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
+        GatherSymbolsListener listener = helper.getListener("CorrectMultipleLevelArithmeticExpression.txt", () -> new GatherSymbolsListener());
+        
+        Assert.assertEquals(0, listener.errors.size());        
+    }
+    
+    @Test 
+    public void CorrectStringConcatenationExpressionEvaluation() throws IOException{
+        TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
+        GatherSymbolsListener listener = helper.getListener("CorrectStringConcatenationExpression.txt", () -> new GatherSymbolsListener());
+        
+        Assert.assertEquals(0, listener.errors.size());        
+    }
+    
+    @Test 
+    public void WrongStringConcatenationExpressionEvaluation() throws IOException{
+        TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
+        GatherSymbolsListener listener = helper.getListener("WrongStringConcatenationExpression.txt", () -> new GatherSymbolsListener());
+        
+        Assert.assertEquals(1, listener.errors.size());        
     }
 }

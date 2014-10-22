@@ -1,13 +1,7 @@
 programa
 {
-        funcao inteiro  numero_linhas(inteiro mat){
-            retorne 0
-        }
-
-        funcao inteiro numero_colunas(inteiro mat){
-            retorne 0
-        }
-
+	inclua biblioteca Util --> u
+	
 	funcao inicio()
 	{
 		inteiro mat[][] = 
@@ -17,8 +11,8 @@ programa
 			{ 9, 0, 1, 3}
 		}
 
-		inteiro linhas = numero_linhas(mat)
-		inteiro colunas = numero_colunas(mat)
+		inteiro linhas = u.numero_linhas(mat)
+		inteiro colunas = u.numero_colunas(mat)
                 
                 linhas = 5
 

@@ -12,20 +12,6 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#decVetor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDecVetor(@NotNull PortugolParser.DecVetorContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#lista_param}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLista_param(@NotNull PortugolParser.Lista_paramContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#dec_var}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -38,6 +24,174 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTipo(@NotNull PortugolParser.TipoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#bloco}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBloco(@NotNull PortugolParser.BlocoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#programa}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrograma(@NotNull PortugolParser.ProgramaContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#expressao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressao(@NotNull PortugolParser.ExpressaoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#declaracoes}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclaracoes(@NotNull PortugolParser.DeclaracoesContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#dec_constante}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDec_constante(@NotNull PortugolParser.Dec_constanteContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#caso}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCaso(@NotNull PortugolParser.CasoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#operador_ou_logico}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperador_ou_logico(@NotNull PortugolParser.Operador_ou_logicoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#alteracaoValorVariavel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#operador_e_binario}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperador_e_binario(@NotNull PortugolParser.Operador_e_binarioContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#operador_aritmetico_prioritario}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperador_aritmetico_prioritario(@NotNull PortugolParser.Operador_aritmetico_prioritarioContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#corpo}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCorpo(@NotNull PortugolParser.CorpoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#atribuicao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtribuicao(@NotNull PortugolParser.AtribuicaoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#operador_ou_binario}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperador_ou_binario(@NotNull PortugolParser.Operador_ou_binarioContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#decVar}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecVar(@NotNull PortugolParser.DecVarContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#escreva}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEscreva(@NotNull PortugolParser.EscrevaContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#dec_funcao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDec_funcao(@NotNull PortugolParser.Dec_funcaoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#bibliotecas}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBibliotecas(@NotNull PortugolParser.BibliotecasContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#contador_para}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContador_para(@NotNull PortugolParser.Contador_paraContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#operador_aritmetico_secundario_concatenacao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperador_aritmetico_secundario_concatenacao(@NotNull PortugolParser.Operador_aritmetico_secundario_concatenacaoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#escolha}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEscolha(@NotNull PortugolParser.EscolhaContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#dimensao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDimensao(@NotNull PortugolParser.DimensaoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#operador}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperador(@NotNull PortugolParser.OperadorContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#decVetor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecVetor(@NotNull PortugolParser.DecVetorContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#lista_param}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLista_param(@NotNull PortugolParser.Lista_paramContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#id_consumo}.
@@ -68,27 +222,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOperador_bit(@NotNull PortugolParser.Operador_bitContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#bloco}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBloco(@NotNull PortugolParser.BlocoContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#programa}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPrograma(@NotNull PortugolParser.ProgramaContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#expressao}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpressao(@NotNull PortugolParser.ExpressaoContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#dec_lista_param}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -101,20 +234,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitOperador_e_logico(@NotNull PortugolParser.Operador_e_logicoContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#declaracoes}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDeclaracoes(@NotNull PortugolParser.DeclaracoesContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#dec_constante}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDec_constante(@NotNull PortugolParser.Dec_constanteContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#se}.
@@ -138,13 +257,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitPara(@NotNull PortugolParser.ParaContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#caso}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCaso(@NotNull PortugolParser.CasoContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#operador_comparacao_secundario}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -152,39 +264,11 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOperador_comparacao_secundario(@NotNull PortugolParser.Operador_comparacao_secundarioContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#operador_ou_logico}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOperador_ou_logico(@NotNull PortugolParser.Operador_ou_logicoContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#alteracaoValorVariavel}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#comando}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitComando(@NotNull PortugolParser.ComandoContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#operador_e_binario}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOperador_e_binario(@NotNull PortugolParser.Operador_e_binarioContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#operador_aritmetico_prioritario}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOperador_aritmetico_prioritario(@NotNull PortugolParser.Operador_aritmetico_prioritarioContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#valor_constante}.
@@ -201,39 +285,11 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitParam_funcao(@NotNull PortugolParser.Param_funcaoContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#corpo}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCorpo(@NotNull PortugolParser.CorpoContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#atribuicao}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAtribuicao(@NotNull PortugolParser.AtribuicaoContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#leia}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLeia(@NotNull PortugolParser.LeiaContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#operador_ou_binario}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOperador_ou_binario(@NotNull PortugolParser.Operador_ou_binarioContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#decVar}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDecVar(@NotNull PortugolParser.DecVarContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#dec_item_param}.
@@ -243,27 +299,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitDec_item_param(@NotNull PortugolParser.Dec_item_paramContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#escreva}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEscreva(@NotNull PortugolParser.EscrevaContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#dec_funcao}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDec_funcao(@NotNull PortugolParser.Dec_funcaoContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#bibliotecas}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBibliotecas(@NotNull PortugolParser.BibliotecasContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#operador_comparacao_prioritario}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -271,25 +306,11 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOperador_comparacao_prioritario(@NotNull PortugolParser.Operador_comparacao_prioritarioContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#contador_para}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitContador_para(@NotNull PortugolParser.Contador_paraContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#operando}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitOperando(@NotNull PortugolParser.OperandoContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#escolha}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEscolha(@NotNull PortugolParser.EscolhaContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#retorno}.
@@ -313,13 +334,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitFaca(@NotNull PortugolParser.FacaContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#dimensao}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDimensao(@NotNull PortugolParser.DimensaoContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#lista_var}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -339,11 +353,4 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitChamada_funcao_biblioteca(@NotNull PortugolParser.Chamada_funcao_bibliotecaContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#operador}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOperador(@NotNull PortugolParser.OperadorContext ctx);
 }

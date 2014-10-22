@@ -23,6 +23,17 @@ public class ErrorsTest {
     }
     
     @Test
+    public void correctLibrarySyntaxInput() throws IOException {        
+        LanguageManager manager = new LanguageManager();
+        URL url = getClass().getResource("CorrectLibrarySyntax.txt");
+        String input = FileHelper.GetStringFromFile(url.getPath());
+        List<String> errors;
+        errors = manager.Validate(input);
+
+        Assert.assertEquals(0, errors.size());
+    }
+    
+    @Test
     public void incorrectLibrarySyntaxInput() throws IOException {
         LanguageManager manager = new LanguageManager();
         URL url = getClass().getResource("IncorrectLibrarySyntax.txt");

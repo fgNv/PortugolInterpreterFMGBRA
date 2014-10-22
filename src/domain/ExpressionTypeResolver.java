@@ -43,8 +43,13 @@ public class ExpressionTypeResolver {
 
     private Tipo getOperandoType(PortugolParser.OperandoContext ctx) {
         if (ctx.chamada_funcao() != null) {
-            String funcName = ctx.chamada_funcao().id_consumo().getText();
-            return listener.getFunctionType(funcName);
+
+            if (ctx.chamada_funcao().chamada_funcao_biblioteca() != null) {
+                throw new RuntimeException("Ainda não é possível avaliar tipo de retorno de funções de bibliotecas");
+            } else {
+                String funcName = ctx.chamada_funcao().id_consumo().getText();
+                return listener.getFunctionType(funcName);
+            }
         }
 
         if (ctx.id_consumo() != null) {
@@ -76,7 +81,7 @@ public class ExpressionTypeResolver {
         } else if (ctx.operador_e_logico() != null || ctx.operador_ou_logico() != null) {
             return Operador.logico;
         }
-        
+
         return null;
     }
 
@@ -135,12 +140,12 @@ public class ExpressionTypeResolver {
 
     public Tipo getExpressionType(PortugolParser.ExpressaoContext ctx, GatherSymbolsListener listener) {
         this.listener = listener;
-        
+
         if (ctx.operando() != null) {
             Tipo operandoType = getOperandoType(ctx.operando());
             return getTypeResult(operandoType, null);
         }
-        
+
         Operador tipoOperador = getTipoOperador(ctx);
         List<Tipo> types = ctx.expressao().stream().map(e -> getExpressionType(e, tipoOperador)).collect(Collectors.toList());
 

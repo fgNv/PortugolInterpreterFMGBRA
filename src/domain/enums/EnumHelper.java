@@ -56,6 +56,8 @@ public class EnumHelper {
         switch (operador) {
             case aritmetico:
                 return "aritmetico";
+            case aritmeticoConcatenacao:
+                return "aritmeticoConcatenacao";
             case binario:
                 return "binario";
             case bit:

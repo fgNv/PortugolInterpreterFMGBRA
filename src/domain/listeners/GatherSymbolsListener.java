@@ -64,7 +64,15 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         Variable var = new Variable(id.getText(), scopeStack.peek().scopeId, currentType, scopeStack.peek().functionName);
 
         if (ctx.getText().contains("=")) {
-            var.setIsInitialized(true);
+            ExpressionTypeResolver expressionTypeResolver = new ExpressionTypeResolver();
+            Tipo expectedType = EnumHelper.TipoFromString(currentType);
+            Tipo providedType = expressionTypeResolver.getExpressionType(ctx.expressao(), this);
+
+            if (expectedType != providedType) {
+                errors.add("Era esperado o tipo \"" + EnumHelper.asString(expectedType) + "\", mas foi encontrado \" " + EnumHelper.asString(providedType) + "\"");
+            } else {
+                var.setIsInitialized(true);
+            }
         }
 
         variables.add(var);
@@ -161,7 +169,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
 
         Variable variable = o.getItemByName(variableName, variables);
         String expectedType = variable.getType();
-        ExpressionTypeResolver expressionTypeResolver = new ExpressionTypeResolver(); 
+        ExpressionTypeResolver expressionTypeResolver = new ExpressionTypeResolver();
         String givenType = EnumHelper.asString(expressionTypeResolver.getExpressionType(ctx.expressao(), this));
 
         if (givenType != null && !expectedType.equals(givenType)) {

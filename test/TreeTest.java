@@ -15,7 +15,7 @@ public class TreeTest {
     public void GetFunctions() throws IOException {
         TestHelpers<GatherFunctionNamesListener> helper = new TestHelpers<>();
         GatherFunctionNamesListener listener = helper.getListener("CorrectSyntax.txt", () -> new GatherFunctionNamesListener());
-        Assert.assertEquals(1, listener.functions.size());
+        Assert.assertEquals(3, listener.functions.size());
     }
 
     @Test
@@ -23,7 +23,7 @@ public class TreeTest {
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
         GatherSymbolsListener listener = helper.getListener("CorrectSyntax.txt", () -> new GatherSymbolsListener());
         
-        Assert.assertEquals(1, listener.functions.size());
+        Assert.assertEquals(3, listener.functions.size());
         Assert.assertEquals(2, listener.variables.size());
         Assert.assertEquals(1, listener.vectors.size());
     }

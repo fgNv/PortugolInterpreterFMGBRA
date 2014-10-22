@@ -1,0 +1,7 @@
+programa{
+    funcao oi(){
+        Cadeia ola
+
+        ola = "asdasdsa" + "asdasdsa" + 5 + 'S'
+    }
+}
