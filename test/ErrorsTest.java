@@ -43,4 +43,28 @@ public class ErrorsTest {
 
         Assert.assertEquals(1, errors.size());
     }
+    
+    
+    @Test
+    public void unfinishedExpression() throws IOException {
+        LanguageManager manager = new LanguageManager();
+        URL url = getClass().getResource("UnfinishedExpression.txt");
+        String input = FileHelper.GetStringFromFile(url.getPath());
+        List<String> errors;
+        errors = manager.Validate(input);
+
+        Assert.assertEquals(1, errors.size());
+    }
+    
+    
+    @Test
+    public void correctParameterlessFunctionCall() throws IOException {        
+        LanguageManager manager = new LanguageManager();
+        URL url = getClass().getResource("ParameterlessFunctionCall.txt");
+        String input = FileHelper.GetStringFromFile(url.getPath());
+        List<String> errors;
+        errors = manager.Validate(input);
+
+        Assert.assertEquals(0, errors.size());
+    }
 }

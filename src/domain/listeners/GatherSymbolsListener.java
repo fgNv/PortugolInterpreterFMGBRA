@@ -9,12 +9,15 @@ import Antl4GeneratedMember.PortugolParser.Chamada_funcaoContext;
 import domain.ExpressionTypeResolver;
 import domain.Function;
 import domain.Parameter;
+import domain.ParameterComparison;
 import domain.Vector;
 import domain.enums.EnumHelper;
 import domain.enums.Tipo;
 import helpers.ObjectRetriever;
+import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Stack;
+import java.util.stream.Collectors;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
@@ -259,6 +262,12 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         }
     }
 
+    private Parameter BuildFakeParameter(PortugolParser.ExpressaoContext ctx, Integer position) {
+        ExpressionTypeResolver etr = new ExpressionTypeResolver();
+        Parameter result = new Parameter("$fake$", 0, EnumHelper.asString(etr.getExpressionType(ctx, this)), "", position);
+        return result;
+    }
+
     private void verifyFunctionCallParameters(Chamada_funcaoContext ctx) {
         Optional<Function> functionOpt = functions.stream()
                 .filter((i) -> i.getName().equals(ctx.id_consumo().getText()))
@@ -268,7 +277,30 @@ public class GatherSymbolsListener extends PortugolBaseListener {
             return;
         }
 
-        ctx.param_funcao().expressao();
+        String functionName = functionOpt.get().getName();
+
+        List<Parameter> expectedParameters = parameters.stream().filter(i -> i.getFunction().equals(functionName)).collect(Collectors.toList());
+
+        long givenSize = ctx.param_funcao().expressao().stream().filter(i -> !i.getText().trim().equals("")).count();
+        long expectedSize = expectedParameters.size();
+
+        if (givenSize != expectedSize) {
+            errors.add("Quantidade de parâmetros na chamada da função \"" + functionName + "\" deveria ser " + expectedSize + ", mas foi fornecido " + givenSize);
+            return;
+        }
+
+        int position = 0;
+        List<Parameter> givenParameters = new LinkedList<>();
+        
+        for(PortugolParser.ExpressaoContext e : ctx.param_funcao().expressao()){
+            givenParameters.add(BuildFakeParameter(e, position));
+            position++;
+        }
+
+        List<ParameterComparison> comparison = ParameterComparison.buildCollecetion(expectedParameters, givenParameters);
+
+        comparison.stream().filter(i -> !i.areParametersValid())
+                  .forEach(i -> errors.add("Na chamada da função \"" + i.getExpected().getFunction() + "\" era esperado o tipo " + i.getExpected().getType()+ " no parâmetro nº" + i.getExpected().getParameterPosition()));
     }
 
     @Override

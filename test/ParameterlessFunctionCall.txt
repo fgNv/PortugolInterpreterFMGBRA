@@ -1,0 +1,12 @@
+programa{
+
+    funcao f1(){
+
+    }
+
+    funcao inicio(){
+
+        f1()
+    }
+
+}

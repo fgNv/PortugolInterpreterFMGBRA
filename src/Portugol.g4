@@ -67,7 +67,7 @@ bloco : '{' comando* '}' | comando;
 comando : (dec_var | enquanto | alteracaoValorVariavel | se | chamada_funcao | faca | escolha | retorno | para | leia | escreva | LIMPA'('')' );
 chamada_funcao : (id_consumo | chamada_funcao_biblioteca ) param_funcao;
 chamada_funcao_biblioteca : id_consumo'.'ID ;
-param_funcao: '(' expressao (',' expressao)* ')'; 
+param_funcao: '(' (expressao (',' expressao)*)? ')'; 
 retorno : RETORNE expressao;
 
 alteracaoValorVariavel : atribuicao | id_consumo'++' | id_consumo'--';

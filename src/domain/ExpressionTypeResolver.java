@@ -113,11 +113,7 @@ public class ExpressionTypeResolver {
 
         List<Tipo> types = ctx.expressao().stream().map(e -> getExpressionType(e, tipoOperador)).collect(Collectors.toList());
 
-        if (types.isEmpty()) {
-            throw new RuntimeException("No types found at \"getExpressionType\"");
-        }
-
-        if (types.stream().anyMatch(i -> i == null)) {
+        if (types.isEmpty() || types.stream().anyMatch(i -> i == null)) {
             return null;
         }
 
@@ -149,11 +145,7 @@ public class ExpressionTypeResolver {
         Operador tipoOperador = getTipoOperador(ctx);
         List<Tipo> types = ctx.expressao().stream().map(e -> getExpressionType(e, tipoOperador)).collect(Collectors.toList());
 
-        if (types.isEmpty()) {
-            throw new RuntimeException("No types found at \"getExpressionType\"");
-        }
-
-        if (types.stream().anyMatch(i -> i == null)) {
+        if (types.isEmpty() || types.stream().anyMatch(i -> i == null)) {
             return null;
         }
 

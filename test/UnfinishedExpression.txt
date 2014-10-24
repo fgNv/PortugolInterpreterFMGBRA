@@ -1,0 +1,6 @@
+programa{
+
+	funcao oi(){
+		inteiro ae = 3 + 
+	}
+}

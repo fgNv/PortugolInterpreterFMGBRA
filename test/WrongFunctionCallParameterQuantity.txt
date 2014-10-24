@@ -1,0 +1,12 @@
+programa{
+
+    funcao oi(inteiro ae, inteiro ola){
+
+    }
+
+    funcao inicio(){
+
+        oi(1,2,3)
+    }
+
+}

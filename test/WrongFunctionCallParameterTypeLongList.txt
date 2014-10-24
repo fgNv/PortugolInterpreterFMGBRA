@@ -1,0 +1,12 @@
+programa{
+    
+    funcao ola(inteiro a, inteiro b, inteiro c, inteiro d, inteiro f, inteiro g, cadeia h, cadeia i, cadeia j, cadeia k){
+
+
+    }
+
+    funcao inicio(){
+        ola("",2,3,4,5,6,7,"","","")
+    }
+
+}
