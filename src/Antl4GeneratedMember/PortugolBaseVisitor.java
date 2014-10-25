@@ -138,14 +138,6 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDecVar(@NotNull PortugolParser.DecVarContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitEscreva(@NotNull PortugolParser.EscrevaContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -203,6 +195,14 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitOperador(@NotNull PortugolParser.OperadorContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDecSingleVar(@NotNull PortugolParser.DecSingleVarContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

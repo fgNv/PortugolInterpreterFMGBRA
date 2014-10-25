@@ -212,19 +212,6 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDecVar(@NotNull PortugolParser.DecVarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDecVar(@NotNull PortugolParser.DecVarContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterEscreva(@NotNull PortugolParser.EscrevaContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -323,6 +310,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOperador(@NotNull PortugolParser.OperadorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDecSingleVar(@NotNull PortugolParser.DecSingleVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecSingleVar(@NotNull PortugolParser.DecSingleVarContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

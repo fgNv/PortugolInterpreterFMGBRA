@@ -6,6 +6,7 @@ import java.util.List;
 import Antl4GeneratedMember.PortugolBaseListener;
 import Antl4GeneratedMember.PortugolParser;
 import Antl4GeneratedMember.PortugolParser.Chamada_funcaoContext;
+import domain.BaseItem;
 import domain.ExpressionTypeResolver;
 import domain.Function;
 import domain.Parameter;
@@ -17,6 +18,7 @@ import helpers.ObjectRetriever;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Stack;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -35,12 +37,13 @@ public class GatherSymbolsListener extends PortugolBaseListener {
     private int currentScopeId;
     private int currentParamCount;
     private String currentFunctionName;
-    private String currentType;
+    private String currentVarDeclarationType;
     private int currentScopeDepth;
     private final Stack<Scope> scopeStack = new Stack<>();
+    private final int GLOBAL_SCOPE_ID = 0;
 
     public GatherSymbolsListener() {
-        scopeStack.push(new Scope("", 0, 0));
+        scopeStack.push(new Scope("", 0, GLOBAL_SCOPE_ID));
         currentScopeDepth = 1;
     }
 
@@ -57,28 +60,45 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         }
     }
 
-    @Override
-    public void enterDecVar(PortugolParser.DecVarContext ctx) {
-        TerminalNode id = ctx.ID();
-        if (id == null) {
+    private void checkDuplicatesOnDecVar(String token) {
+        if (isThereAFunctionCalled(token)) {
+            errors.add("Há uma função que já usa o nome \"" + token + "\"");
+        } 
+        if (isThereAParamInCurrentFunctionCalled(token)) {
+            errors.add("Há um parâmetro que já usa o nome \"" + token + "\"");
+        }
+    }
+
+    private void checkInitializationType(PortugolParser.DecSingleVarContext ctx, Variable var) {
+        if (!ctx.getText().contains("=")) {
             return;
         }
 
-        Variable var = new Variable(id.getText(), scopeStack.peek().scopeId, currentType, scopeStack.peek().functionName);
+        ExpressionTypeResolver expressionTypeResolver = new ExpressionTypeResolver();
+        Tipo expectedType = EnumHelper.TipoFromString(currentVarDeclarationType);
+        Tipo providedType = expressionTypeResolver.getExpressionType(ctx.expressao(), this);
 
-        if (ctx.getText().contains("=")) {
-            ExpressionTypeResolver expressionTypeResolver = new ExpressionTypeResolver();
-            Tipo expectedType = EnumHelper.TipoFromString(currentType);
-            Tipo providedType = expressionTypeResolver.getExpressionType(ctx.expressao(), this);
-
-            if (expectedType != providedType) {
-                errors.add("Era esperado o tipo \"" + EnumHelper.asString(expectedType) + "\", mas foi encontrado \" " + EnumHelper.asString(providedType) + "\"");
-            } else {
-                var.setIsInitialized(true);
-            }
+        if (expectedType != providedType) {
+            errors.add("Era esperado o tipo \"" + EnumHelper.asString(expectedType) + "\", mas foi encontrado \" " + EnumHelper.asString(providedType) + "\"");
+        } else {
+            var.setIsInitialized(true);
         }
+    }
 
+    private Variable registerVariable(PortugolParser.DecSingleVarContext ctx) {
+        Variable var = new Variable(ctx.ID().getText(), scopeStack.peek().scopeId, currentVarDeclarationType, scopeStack.peek().functionName);
         variables.add(var);
+        return var;
+    }
+
+    @Override
+    public void enterDecSingleVar(PortugolParser.DecSingleVarContext ctx) {
+        if (ctx.ID() == null) {
+            return;
+        }
+        checkDuplicatesOnDecVar(ctx.ID().getText());
+        Variable var = registerVariable(ctx);
+        checkInitializationType(ctx, var);
     }
 
     @Override
@@ -102,17 +122,23 @@ public class GatherSymbolsListener extends PortugolBaseListener {
     public boolean isThereAFunctionCalled(String name) {
         return functions.stream().anyMatch((v) -> v.getName().equals(name));
     }
-
-    public boolean isThereAVariableCurrentScopeCalled(String name) {
-        return variables.stream().anyMatch((v) -> v.getName().equals(name) && v.getScope() == scopeStack.peek().scopeId);
+    
+    Predicate<Variable> sameNameCurrentScope = (v) -> v.getScope() == scopeStack.peek().scopeId || v.getScope() == GLOBAL_SCOPE_ID;
+    
+    public boolean isThereAVectorCurrentScopeCalled(String name) {
+        return vectors.stream().filter(sameNameCurrentScope).anyMatch((v) -> v.getName().equals(name));
     }
 
-    public boolean isThereAParamCalled(String name) {
+    public boolean isThereAVariableCurrentScopeCalled(String name) {
+        return variables.stream().filter(sameNameCurrentScope).anyMatch((v) -> v.getName().equals(name));
+    }
+
+    public boolean isThereAParamInCurrentFunctionCalled(String name) {
         return parameters.stream().anyMatch((v) -> v.getName().equals(name) && v.getFunction().equals(currentFunctionName));
     }
 
     private boolean isTokenDeclared(String token) {
-        return isThereAFunctionCalled(token) || isThereAVariableCurrentScopeCalled(token) || isThereAParamCalled(token);
+        return isThereAFunctionCalled(token) || isThereAVariableCurrentScopeCalled(token) || isThereAParamInCurrentFunctionCalled(token) || isThereAVectorCurrentScopeCalled(token);
     }
 
     @Override
@@ -151,7 +177,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
 
         int dimensionsCount = ctx.dimensao().size();
 
-        Vector vector = new Vector(dimensionsCount, id.getText(), scopeStack.peek().scopeId, currentType, scopeStack.peek().functionName);
+        Vector vector = new Vector(dimensionsCount, id.getText(), scopeStack.peek().scopeId, currentVarDeclarationType, scopeStack.peek().functionName);
         if (ctx.getText().contains("=")) {
             vector.setIsInitialized(true);
         }
@@ -159,12 +185,13 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         vectors.add(vector);
     }
 
-    @Override
-    public void enterAtribuicao(PortugolParser.AtribuicaoContext ctx) {
-
+    private void verifyAttributionType(PortugolParser.AtribuicaoContext ctx) {
         String variableName = ctx.id_consumo().getText();
 
         if (!isThereAVariableCurrentScopeCalled(variableName)) {
+            if (isThereAFunctionCalled(variableName)) {
+                errors.add("Não se pode atribuir valores a funções");
+            }
             return;
         }
 
@@ -183,6 +210,11 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         String alteredVariableName = ctx.id_consumo().getText();
         setVariableAsInitialized(alteredVariableName, variables);
         setVariableAsInitialized(alteredVariableName, parameters);
+    }
+
+    @Override
+    public void enterAtribuicao(PortugolParser.AtribuicaoContext ctx) {
+        verifyAttributionType(ctx);
     }
 
     private void setVariableAsUsed(PortugolParser.Id_consumoContext id, List<? extends Variable> analysedVariables) {
@@ -291,8 +323,8 @@ public class GatherSymbolsListener extends PortugolBaseListener {
 
         int position = 0;
         List<Parameter> givenParameters = new LinkedList<>();
-        
-        for(PortugolParser.ExpressaoContext e : ctx.param_funcao().expressao()){
+
+        for (PortugolParser.ExpressaoContext e : ctx.param_funcao().expressao()) {
             givenParameters.add(BuildFakeParameter(e, position));
             position++;
         }
@@ -300,7 +332,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         List<ParameterComparison> comparison = ParameterComparison.buildCollecetion(expectedParameters, givenParameters);
 
         comparison.stream().filter(i -> !i.areParametersValid())
-                  .forEach(i -> errors.add("Na chamada da função \"" + i.getExpected().getFunction() + "\" era esperado o tipo " + i.getExpected().getType()+ " no parâmetro nº" + i.getExpected().getParameterPosition()));
+                .forEach(i -> errors.add("Na chamada da função \"" + i.getExpected().getFunction() + "\" era esperado o tipo " + i.getExpected().getType() + " no parâmetro nº" + i.getExpected().getParameterPosition()));
     }
 
     @Override
@@ -315,7 +347,8 @@ public class GatherSymbolsListener extends PortugolBaseListener {
 
     @Override
     public void enterDec_var(PortugolParser.Dec_varContext ctx) {
-        currentType = ctx.tipo().getText();
+        currentVarDeclarationType = ctx.tipo().getText();
+
     }
 
     @Override

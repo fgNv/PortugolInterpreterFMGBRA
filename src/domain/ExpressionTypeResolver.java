@@ -55,7 +55,7 @@ public class ExpressionTypeResolver {
         if (ctx.id_consumo() != null) {
             String idName = ctx.id_consumo().getText();
 
-            if (listener.isThereAParamCalled(idName)) {
+            if (listener.isThereAParamInCurrentFunctionCalled(idName)) {
                 return EnumHelper.TipoFromString(listener.getParamType(idName));
             }
 

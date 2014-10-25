@@ -1,8 +1,0 @@
-programa{
-
-    funcao oi(){
-        Cadeia oi
-        oi = "oasdad" + "asd" + 'C' + "asdasd"
-    }
-
-}

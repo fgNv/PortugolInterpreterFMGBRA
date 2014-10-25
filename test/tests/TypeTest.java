@@ -1,4 +1,7 @@
+package tests;
 
+
+import helpers.TestHelpers;
 import domain.listeners.GatherSymbolsListener;
 import java.io.IOException;
 import junit.framework.Assert;

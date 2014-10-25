@@ -1,9 +1,10 @@
+package helpers;
 
 import Antl4GeneratedMember.PortugolBaseListener;
 import domain.LanguageManager;
-import helpers.FileHelper;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
@@ -20,10 +21,11 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 public class TestHelpers<T extends PortugolBaseListener> {
 
     public interface PortugolBaseListenerConstuct<T extends PortugolBaseListener> {
+
         public T construct();
     }
 
-    public T getListener(String inputUrl, PortugolBaseListenerConstuct<T> constructor) throws IOException{
+    public T getListener(String inputUrl, PortugolBaseListenerConstuct<T> constructor) throws IOException {
         LanguageManager manager = new LanguageManager();
         URL url = getClass().getResource(inputUrl);
         String input = FileHelper.GetStringFromFile(url.getPath());
@@ -35,5 +37,4 @@ public class TestHelpers<T extends PortugolBaseListener> {
         walker.walk(listener, tree);
         return listener;
     }
-
 }

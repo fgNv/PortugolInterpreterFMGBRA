@@ -491,23 +491,23 @@ public class PortugolParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class DecVarContext extends Item_varContext {
+	public static class DecSingleVarContext extends Item_varContext {
 		public TerminalNode ID() { return getToken(PortugolParser.ID, 0); }
 		public ExpressaoContext expressao() {
 			return getRuleContext(ExpressaoContext.class,0);
 		}
-		public DecVarContext(Item_varContext ctx) { copyFrom(ctx); }
+		public DecSingleVarContext(Item_varContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).enterDecVar(this);
+			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).enterDecSingleVar(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).exitDecVar(this);
+			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).exitDecSingleVar(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitDecVar(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitDecSingleVar(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -520,7 +520,7 @@ public class PortugolParser extends Parser {
 			setState(147);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
-				_localctx = new DecVarContext(_localctx);
+				_localctx = new DecSingleVarContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(132); match(ID);

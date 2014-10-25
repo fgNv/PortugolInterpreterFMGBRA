@@ -1,0 +1,7 @@
+programa{
+	inteiro v1
+
+	funcao f1(){
+		f1 = v1
+	}
+}

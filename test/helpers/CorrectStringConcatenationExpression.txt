@@ -1,0 +1,8 @@
+programa{
+
+    funcao f1(){
+        cadeia v1
+        v1 = "oasdad" + "asd" + 'C' + "asdasd"
+    }
+
+}

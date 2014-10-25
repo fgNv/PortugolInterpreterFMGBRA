@@ -117,13 +117,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOperador_ou_binario(@NotNull PortugolParser.Operador_ou_binarioContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#decVar}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDecVar(@NotNull PortugolParser.DecVarContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#escreva}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -178,6 +171,13 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitOperador(@NotNull PortugolParser.OperadorContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#decSingleVar}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecSingleVar(@NotNull PortugolParser.DecSingleVarContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#decVetor}.

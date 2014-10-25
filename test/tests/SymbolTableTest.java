@@ -1,4 +1,7 @@
+package tests;
 
+
+import helpers.TestHelpers;
 import domain.Function;
 import domain.Variable;
 import domain.listeners.GatherSymbolsListener;

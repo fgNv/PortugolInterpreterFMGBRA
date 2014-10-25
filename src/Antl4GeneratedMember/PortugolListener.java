@@ -174,17 +174,6 @@ public interface PortugolListener extends ParseTreeListener {
 	void exitOperador_ou_binario(@NotNull PortugolParser.Operador_ou_binarioContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link PortugolParser#decVar}.
-	 * @param ctx the parse tree
-	 */
-	void enterDecVar(@NotNull PortugolParser.DecVarContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PortugolParser#decVar}.
-	 * @param ctx the parse tree
-	 */
-	void exitDecVar(@NotNull PortugolParser.DecVarContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link PortugolParser#escreva}.
 	 * @param ctx the parse tree
 	 */
@@ -271,6 +260,17 @@ public interface PortugolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOperador(@NotNull PortugolParser.OperadorContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link PortugolParser#decSingleVar}.
+	 * @param ctx the parse tree
+	 */
+	void enterDecSingleVar(@NotNull PortugolParser.DecSingleVarContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PortugolParser#decSingleVar}.
+	 * @param ctx the parse tree
+	 */
+	void exitDecSingleVar(@NotNull PortugolParser.DecSingleVarContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link PortugolParser#decVetor}.

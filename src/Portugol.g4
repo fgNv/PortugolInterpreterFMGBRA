@@ -9,7 +9,7 @@ declaracoes : (dec_funcao | dec_var | dec_constante)*;
 
 dimensao : '[' (INTEIRO | id_consumo )? ']';
 
-item_var : ID ('=' expressao)?  #decVar | 
+item_var : ID ('=' expressao)?  #decSingleVar | 
            ID dimensao+ ('=' inicializacao_vetor)?  #decVetor ;
 lista_var : item_var (',' item_var)*;
 dec_var : tipo lista_var ;

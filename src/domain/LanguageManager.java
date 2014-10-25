@@ -1,7 +1,7 @@
 package domain;
 
-import domain.errorHandlers.LexiconErrorHandler;
-import domain.errorHandlers.SyntactictErrorHandler;
+import domain.errorHandlers.LexiconErrorMessageStoreHandler;
+import domain.errorHandlers.SyntactictErrorMessageStoreHandler;
 import domain.listeners.GatherSymbolsListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,23 +31,16 @@ public class LanguageManager {
         }
     }
 
-    public List<String> Validate(String input) {
+    private void arrangeErrorListeners(Tools tools, List<String> errors) {
 
-        List<String> result;
-        result = new ArrayList<>();
+        LexiconErrorMessageStoreHandler tratadorErrosLexico = new LexiconErrorMessageStoreHandler(errors);
+        SyntactictErrorMessageStoreHandler tratadorErrosSintatico = new SyntactictErrorMessageStoreHandler(errors);
 
-        LexiconErrorHandler tratadorErrosLexico = new LexiconErrorHandler(result);
-        SyntactictErrorHandler tratadorErrosSintatico = new SyntactictErrorHandler(result);
-
-        Tools tools = new Tools(input);
         tools.lexer.removeErrorListeners();
         tools.parser.removeErrorListeners();
 
         tools.lexer.addErrorListener(tratadorErrosLexico);
         tools.parser.addErrorListener(tratadorErrosSintatico);
-
-        tools.parser.programa();
-        return result;
     }
 
     public ParserRuleContext GetTree(String input) {
@@ -60,12 +53,13 @@ public class LanguageManager {
 
         GatherSymbolsListener gatherSymbolsListener = new GatherSymbolsListener();
         Tools tools = new Tools(input);
+        arrangeErrorListeners(tools, gatherSymbolsListener.errors);
         ParserRuleContext tree = tools.parser.programa();
 
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(gatherSymbolsListener, tree);
 
-        Symbols result = new Symbols(gatherSymbolsListener.variables, gatherSymbolsListener.functions, gatherSymbolsListener.parameters,gatherSymbolsListener.errors);
+        Symbols result = new Symbols(gatherSymbolsListener.variables, gatherSymbolsListener.functions, gatherSymbolsListener.parameters, gatherSymbolsListener.errors);
         return result;
     }
 }

@@ -11,7 +11,6 @@ import domain.TokensProvider;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.IntFunction;
 import java.util.regex.Matcher;
@@ -55,7 +54,6 @@ public class MainViewController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 obterSimbolos(newValue);
-                checarTretas(newValue);
                 return null;
             }
         };
@@ -100,12 +98,6 @@ public class MainViewController implements Initializable {
         functions.setItems(FXCollections.observableList(symbols.functions));
         parameters.setItems(FXCollections.observableList(symbols.parameters));
         errors.setItems(FXCollections.observableList(symbols.errors));
-    }
-
-    private void checarTretas(String input) {
-        List<String> errorsList;
-        errorsList = manager.Validate(input);
-        errors.getItems().addAll(errorsList);
     }
 
     private StyleSpans<Collection<String>> computeHighlighting(String text) {
