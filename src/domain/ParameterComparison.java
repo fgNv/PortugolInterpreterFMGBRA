@@ -31,7 +31,7 @@ public class ParameterComparison {
         return parameter.isPresent() ? parameter.get() : null;
     }
 
-    public static List<ParameterComparison> buildCollecetion(List<Parameter> expected, List<Parameter> provided) {
+    public static List<ParameterComparison> buildCollection(List<Parameter> expected, List<Parameter> provided) {
         return expected
                 .stream()
                 .map(i -> new ParameterComparison(i, getByPosition(provided, i.getParameterPosition())))

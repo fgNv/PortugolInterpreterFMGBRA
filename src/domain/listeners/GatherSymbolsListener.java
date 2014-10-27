@@ -257,6 +257,18 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         throw new RuntimeException("At \"getFunctionType\" function \"" + name + "\" was not found");
     }
 
+    public String getVectorType(String name) {
+        Optional<Vector> vector = vectors.stream()
+                .filter(i -> i.getName().equals(name))
+                .findFirst();
+
+        if (vector.isPresent()) {
+            return vector.get().getType();
+        }
+
+        throw new RuntimeException("Variable \"" + name + "\" not found at \"getVariableTypes\"");
+    }
+    
     public String getVariableType(String name) {
         Optional<Variable> variable = variables.stream()
                 .filter(i -> i.getName().equals(name))
@@ -329,7 +341,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
             position++;
         }
 
-        List<ParameterComparison> comparison = ParameterComparison.buildCollecetion(expectedParameters, givenParameters);
+        List<ParameterComparison> comparison = ParameterComparison.buildCollection(expectedParameters, givenParameters);
 
         comparison.stream().filter(i -> !i.areParametersValid())
                 .forEach(i -> errors.add("Na chamada da função \"" + i.getExpected().getFunction() + "\" era esperado o tipo " + i.getExpected().getType() + " no parâmetro nº" + i.getExpected().getParameterPosition()));

@@ -1,10 +1,10 @@
 programa
 {
-        funcao inteiro  numero_linhas(inteiro mat){
+        funcao inteiro  numero_linhas(inteiro[][] mat){
             retorne 0
         }
 
-        funcao inteiro numero_colunas(inteiro mat){
+        funcao inteiro numero_colunas(inteiro[][] mat){
             retorne 0
         }
 
