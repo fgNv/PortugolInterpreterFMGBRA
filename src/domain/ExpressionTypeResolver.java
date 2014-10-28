@@ -48,7 +48,7 @@ public class ExpressionTypeResolver {
                 throw new RuntimeException("Ainda não é possível avaliar tipo de retorno de funções de bibliotecas");
             } else {
                 String funcName = ctx.chamada_funcao().id_consumo().getText();
-                return new TypeData(listener.getFunctionType(funcName));
+                return listener.getFunctionType(funcName);
             }
         }
 
@@ -91,6 +91,12 @@ public class ExpressionTypeResolver {
         if (tipoOperando == null || operador == null) {
             return tipoOperando;
         }
+        
+        if(tipoOperando.isArray()){
+            listener.errors.add("Não se pode fazer operações com matrizes");
+            return tipoOperando;
+        }            
+        
         if ((operador == Operator.aritmetico || operador == Operator.aritmeticoConcatenacao)
                 && (tipoOperando.getType() == Type.inteiro || tipoOperando.getType() == Type.real)) {
             return tipoOperando;

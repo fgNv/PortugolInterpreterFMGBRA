@@ -1,0 +1,14 @@
+programa{
+    
+    funcao f1(inteiro [] p1){
+
+    }
+
+    funcao f2(){
+
+        inteiro v1 = 5
+        f1(v1)
+
+    }
+
+}

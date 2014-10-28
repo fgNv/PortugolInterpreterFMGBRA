@@ -45,7 +45,7 @@ public class LanguageManager {
     
     public Symbols GetVariableList(String input) {
         GatherSymbolsListener gatherSymbolsListener = GetListener(input);
-        Symbols result = new Symbols(gatherSymbolsListener.variables, gatherSymbolsListener.functions, gatherSymbolsListener.parameters, gatherSymbolsListener.errors);
+        Symbols result = new Symbols(gatherSymbolsListener.variables, gatherSymbolsListener.functions, gatherSymbolsListener.parameters, gatherSymbolsListener.errors, gatherSymbolsListener.warnings);
         return result;
     }
 }

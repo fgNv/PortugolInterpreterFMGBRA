@@ -5,7 +5,6 @@
  */
 package domain;
 
-import domain.enums.EnumHelper;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;

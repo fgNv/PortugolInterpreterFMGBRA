@@ -30,6 +30,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
     public final List<Variable> variables = new ArrayList<>();
     public final List<Function> functions = new ArrayList<>();
     public final List<Parameter> parameters = new ArrayList<>();
+    public final List<String> warnings = new ArrayList<>();
     public final List<String> errors = new ArrayList<>();
     public final List<String> unknownUsedIds = new ArrayList<>();
     private int currentScopeId;
@@ -64,6 +65,9 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         }
         if (isThereAParamInCurrentFunctionCalled(token)) {
             errors.add("Há um parâmetro que já usa o nome \"" + token + "\"");
+        }
+        if (isThereAVariableCurrentScopeCalled(token)) {
+            errors.add("Há uma variável que já usa o nome \"" + token + "\"");
         }
     }
 
@@ -200,6 +204,8 @@ public class GatherSymbolsListener extends PortugolBaseListener {
             vector.setIsInitialized(true);
         }
 
+        checkDuplicatesOnDecVar(id.getText());
+
         variables.add(vector);
     }
 
@@ -235,16 +241,33 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         verifyAttributionType(ctx);
     }
 
-    private void setVariableAsUsed(PortugolParser.Id_consumoContext id, List<? extends Variable> analysedVariables) {
+    private Optional<? extends Variable> getByToken(PortugolParser.Id_consumoContext id, List<? extends Variable> analysedVariables) {
         String variableName = id.getText();
         int scopeId = scopeStack.peek().scopeId;
-        Optional<? extends Variable> alteredVariable = analysedVariables.stream()
+        return analysedVariables.stream()
                 .filter(i -> i.getName().equals(variableName) && i.getScope() == scopeId)
                 .findFirst();
+    }
+
+    private void setItemAsUsed(PortugolParser.Id_consumoContext id, List<? extends Variable> analysedVariables) {
+        Optional<? extends Variable> alteredVariable = getByToken(id, analysedVariables);
 
         if (alteredVariable.isPresent()) {
             alteredVariable.get().setIsUsed(true);
         }
+    }
+
+    private void verifyNonInitializedUse(PortugolParser.Id_consumoContext id, List<Variable> analysedVariables) {
+        Optional<? extends Variable> alteredVariable = getByToken(id, analysedVariables);
+
+        if (!alteredVariable.isPresent()) {
+            return;
+        }
+
+        if (!alteredVariable.get().getIsInitialized() && !alteredVariable.get().getIsUsed()) {
+            warnings.add("A variável \"" + id.getText() + "\" está sendo usada antes de ser inicializada.");
+        }
+
     }
 
     private void setFunctionAsUsed(Chamada_funcaoContext functionCall) {
@@ -263,13 +286,13 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         }
     }
 
-    public Type getFunctionType(String name) {
+    public TypeData getFunctionType(String name) {
         Optional<Function> func = functions.stream()
                 .filter(x -> x.getName().equals(name))
                 .findFirst();
 
         if (func.isPresent()) {
-            return EnumHelper.TipoFromString(func.get().getType());
+            return func.get().getTypeData();
         }
 
         throw new RuntimeException("At \"getFunctionType\" function \"" + name + "\" was not found");
@@ -281,7 +304,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
                 .findFirst();
 
         if (variable.isPresent()) {
-            return new TypeData(variable.get().getType());
+            return variable.get().getTypeData();
         }
 
         throw new RuntimeException("Variable \"" + name + "\" not found at \"getVariableTypes\"");
@@ -293,7 +316,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
                 .findFirst();
 
         if (parameter.isPresent()) {
-            return new TypeData(parameter.get().getType());
+            return parameter.get().getTypeData();
         }
 
         throw new RuntimeException("Parameter \"" + name + "\" for function \"" + currentFunctionName + "\" not found at \"getVariableTypes\"");
@@ -304,11 +327,19 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         PortugolParser.Id_consumoContext id = ctx.id_consumo();
         Chamada_funcaoContext chamadaFuncao = ctx.chamada_funcao();
 
-        if (id != null) {
-            setVariableAsUsed(id, parameters);
-            setVariableAsUsed(id, variables);
-        } else if (chamadaFuncao != null) {
+        if (chamadaFuncao != null) {
             setFunctionAsUsed(chamadaFuncao);
+            return;
+        }
+
+        if (id == null) {
+            return;
+        }
+        if (isThereAVariableCurrentScopeCalled(id.getText())) {
+            verifyNonInitializedUse(id, variables);
+            setItemAsUsed(id, variables);
+        } else if (isThereAParamInCurrentFunctionCalled(currentFunctionName)) {
+            setItemAsUsed(id, parameters);
         }
     }
 
@@ -382,15 +413,7 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         currentScopeDepth--;
     }
 
-    @Override
-    public void enterDec_funcao(PortugolParser.Dec_funcaoContext ctx) {
-        String functionName = ctx.ID().getText();
-        currentScopeId++;
-
-        Scope scope = new Scope(functionName, 1, currentScopeId);
-        scopeStack.push(scope);
-        currentFunctionName = functionName;
-
+    private void registerFunction(PortugolParser.Dec_funcaoContext ctx){
         PortugolParser.TipoContext tipo = ctx.tipo();
         TypeData typeData;
 
@@ -404,8 +427,31 @@ public class GatherSymbolsListener extends PortugolBaseListener {
             typeData = new TypeData("vazio");
         }
 
-        Function func = new Function(functionName, typeData);
+        Function func = new Function(currentFunctionName, typeData);
+        
         functions.add(func);
+    }
+    
+    private void verifyFunctionNameDuplicity(){
+        if(functions.stream().anyMatch((f) -> f.getName().equals(currentFunctionName))){
+            errors.add("Já existe uma função que utiliza o nome \"" + currentFunctionName + "\"");
+        }
+    }
+    
+    @Override
+    public void enterDec_funcao(PortugolParser.Dec_funcaoContext ctx) {
+        if (ctx.ID() == null) {
+            return;
+        }
+        String functionName = ctx.ID().getText();
+        currentScopeId++;
+
+        Scope scope = new Scope(functionName, 1, currentScopeId);
+        scopeStack.push(scope);
+        currentFunctionName = functionName;
+
+        verifyFunctionNameDuplicity();
+        registerFunction(ctx);
     }
 
     @Override

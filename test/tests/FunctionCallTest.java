@@ -53,6 +53,15 @@ public class FunctionCallTest {
         LanguageManager manager = new LanguageManager();
         GatherSymbolsListener listener = helper.getListener("ParameterlessFunctionCall.txt", (s) -> manager.GetListener(s));
 
-        Assert.assertEquals(0, listener.errors.size());        
+        Assert.assertEquals(0, listener.errors.size()); 
+    }
+    
+    @Test
+    public void variableInsteadOfVector() throws IOException{
+        TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("VariableInsteadOfVector.txt", (s) -> manager.GetListener(s));
+
+        Assert.assertEquals(1, listener.errors.size());                
     }
 }

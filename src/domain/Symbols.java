@@ -13,15 +13,17 @@ import java.util.List;
  */
 public class Symbols {
 
-    public List<Variable> variables;
-    public List<Function> functions;
-    public List<Parameter> parameters;
-    public List<String> errors;
+    public final List<Variable> variables;
+    public final List<Function> functions;
+    public final List<Parameter> parameters;
+    public final List<String> errors;
+    public final List<String> warnings;
 
-    public Symbols(List<Variable> variables, List<Function> functions, List<Parameter> parameters, List<String> errors) {
+    public Symbols(List<Variable> variables, List<Function> functions, List<Parameter> parameters, List<String> errors, List<String> warnings) {
         this.variables = variables;
         this.functions = functions;
         this.parameters = parameters;
         this.errors = errors;
+        this.warnings = warnings;
     }
 }

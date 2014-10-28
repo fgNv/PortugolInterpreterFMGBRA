@@ -1,0 +1,6 @@
+programa{
+    funcao f1(){
+        inteiro ae = 2
+        inteiro ae[]
+    }
+}

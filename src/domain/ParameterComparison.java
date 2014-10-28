@@ -50,6 +50,6 @@ public class ParameterComparison {
         if(expected == null || provided == null)
             return false;
         
-        return expected.getType().equals(provided.getType());
+        return expected.getType().equals(provided.getType()) && expected.getIsArray() == provided.getIsArray();
     }
 }

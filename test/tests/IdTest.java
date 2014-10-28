@@ -17,7 +17,7 @@ import org.junit.Test;
  *
  * @author Felipe
  */
-public class UnknownIdTest {
+public class IdTest {
 
     @Test
     public void DetectUndeclaredTokens() throws IOException {
@@ -37,5 +37,32 @@ public class UnknownIdTest {
         Assert.assertEquals(1, listener.unknownUsedIds.size());
         Assert.assertEquals(3, listener.errors.size());
 
+    }
+    
+    @Test
+    public void DuplicatedToken() throws IOException {
+        TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("DuplicatedVariableToken.txt", (s) -> manager.GetListener(s));
+
+        Assert.assertEquals(1, listener.errors.size());
+    }
+    
+    @Test
+    public void DuplicatedVariableVectorToken() throws IOException {
+        TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("DuplicatedVariableVectorToken.txt", (s) -> manager.GetListener(s));
+
+        Assert.assertEquals(1, listener.errors.size());
+    }
+    
+    @Test
+    public void DuplicatedFunctionName() throws IOException{
+        TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("DuplicatedFunctionName.txt", (s) -> manager.GetListener(s));
+
+        Assert.assertEquals(1, listener.errors.size());        
     }
 }

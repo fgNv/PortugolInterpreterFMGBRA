@@ -32,6 +32,11 @@
         <ListView fx:id="errors" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always"/>
     </GridPane>
     
+     <GridPane GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="4" >
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Avisos</Label>
+        <ListView fx:id="warnings" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always"/>
+    </GridPane>
+    
     <GridPane GridPane.rowIndex="1" GridPane.columnIndex="2">
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Funções</Label>
         <TableView fx:id="functions" GridPane.rowIndex="1" GridPane.columnIndex="0"  GridPane.hgrow="always" GridPane.vgrow="always">
@@ -51,11 +56,21 @@
                         <PropertyValueFactory property="isUsed" />
                     </cellValueFactory>
                 </TableColumn>
+                <TableColumn text="Is array" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="isArray" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Dimensions" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="dimensions" />
+                    </cellValueFactory>
+                </TableColumn>
             </columns>    
         </TableView>
     </GridPane>
     
-    <GridPane GridPane.rowIndex="2" GridPane.columnIndex="2" >
+    <GridPane GridPane.rowIndex="2" GridPane.columnIndex="2" maxWidth="430" >
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Variáveis</Label>
         <TableView fx:id="variables" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always">
             <columns>
@@ -87,6 +102,16 @@
                 <TableColumn text="Is used" >
                     <cellValueFactory>
                         <PropertyValueFactory property="isUsed" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Is array" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="isArray" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Dimensions" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="dimensions" />
                     </cellValueFactory>
                 </TableColumn>
             </columns>    
@@ -135,6 +160,16 @@
                 <TableColumn text="Position" >
                     <cellValueFactory>
                         <PropertyValueFactory property="parameterPosition" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Is array" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="isArray" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Dimensions" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="dimensions" />
                     </cellValueFactory>
                 </TableColumn>
             </columns>    

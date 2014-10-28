@@ -1,0 +1,9 @@
+programa{
+
+    funcao f1(){
+
+        inteiro p1
+        inteiro p1
+    }
+
+}

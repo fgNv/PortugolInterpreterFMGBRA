@@ -7,7 +7,6 @@
 package domain;
 
 import domain.enums.EnumHelper;
-import domain.enums.Operator;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -48,5 +47,19 @@ public abstract class BaseItem {
     
     public boolean getIsUsed(){
         return this.isUsed.get();
+    }
+    
+    public boolean getIsArray(){
+        if(typeData == null)
+            return false;
+        
+        return typeData.isArray();
+    }
+    
+    public int getDimensions(){
+        if(typeData == null || !typeData.isArray())
+            return 0;
+        
+        return typeData.getDimensions();
     }
 }

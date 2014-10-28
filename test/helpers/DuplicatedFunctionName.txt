@@ -1,0 +1,11 @@
+programa{
+
+    funcao inteiro[][] f1(){
+
+    }
+
+    funcao inteiro f1(){
+
+    }
+
+}

@@ -37,6 +37,8 @@ public class MainViewController implements Initializable {
     @FXML
     public ListView errors;
     @FXML
+    public ListView warnings;
+    @FXML
     public TableView functions;
     @FXML
     public TableView variables;
@@ -97,6 +99,7 @@ public class MainViewController implements Initializable {
         variables.setItems(FXCollections.observableList(symbols.variables));
         functions.setItems(FXCollections.observableList(symbols.functions));
         parameters.setItems(FXCollections.observableList(symbols.parameters));
+        warnings.setItems(FXCollections.observableList(symbols.warnings));
         errors.setItems(FXCollections.observableList(symbols.errors));
     }
 
