@@ -1,6 +1,7 @@
 package tests;
 
 
+import domain.LanguageManager;
 import helpers.TestHelpers;
 import domain.listeners.GatherSymbolsListener;
 import java.io.IOException;
@@ -16,7 +17,8 @@ public class TypeTest {
     @Test
     public void WrongTypeAttribution() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("WrongTypeAttribution.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("WrongTypeAttribution.txt", (s) -> manager.GetListener(s));
         
         Assert.assertEquals(1, listener.errors.size());
     }
@@ -24,7 +26,8 @@ public class TypeTest {
     @Test
     public void WrongExpressionType() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("WrongExpressionType.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("WrongExpressionType.txt", (s) -> manager.GetListener(s));
         
         Assert.assertEquals(1, listener.errors.size());
     }
@@ -32,7 +35,8 @@ public class TypeTest {
     @Test 
     public void WrongVariableInitializationType() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("WrongVariableInitializationType.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("WrongVariableInitializationType.txt", (s) -> manager.GetListener(s));
         
         Assert.assertEquals(1, listener.errors.size());        
     }
@@ -40,7 +44,8 @@ public class TypeTest {
     @Test 
     public void ComplexBoolExpressionEvaluation() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("ComplexBoolExpression.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("ComplexBoolExpression.txt", (s) -> manager.GetListener(s));
         
         Assert.assertEquals(0, listener.errors.size());        
     }
@@ -49,7 +54,8 @@ public class TypeTest {
     @Test 
     public void MultipleLevelArithmeticExpressionEvaluation() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("CorrectMultipleLevelArithmeticExpression.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("CorrectMultipleLevelArithmeticExpression.txt", (s) -> manager.GetListener(s));
         
         Assert.assertEquals(0, listener.errors.size());        
     }
@@ -57,7 +63,8 @@ public class TypeTest {
     @Test 
     public void CorrectStringConcatenationExpressionEvaluation() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("CorrectStringConcatenationExpression.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("CorrectStringConcatenationExpression.txt", (s) -> manager.GetListener(s));
         
         Assert.assertEquals(0, listener.errors.size());        
     }
@@ -65,7 +72,8 @@ public class TypeTest {
     @Test 
     public void WrongStringConcatenationExpressionEvaluation() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("WrongStringConcatenationExpression.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("WrongStringConcatenationExpression.txt", (s) -> manager.GetListener(s));
         
         Assert.assertEquals(1, listener.errors.size());        
     }

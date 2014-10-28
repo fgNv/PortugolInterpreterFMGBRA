@@ -21,7 +21,7 @@ public class Parameter extends Variable {
     
     private final IntegerProperty parameterPosition = new SimpleIntegerProperty();
     
-    public Parameter(String name, int scope, String type, String function, int parameterPosition) {
+    public Parameter(String name, int scope, TypeData type, String function, int parameterPosition) {
         super(name, scope, type, function);
         setParameterPosition(parameterPosition);
     }

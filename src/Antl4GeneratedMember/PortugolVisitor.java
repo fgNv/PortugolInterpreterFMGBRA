@@ -152,6 +152,13 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOperador_aritmetico_secundario_concatenacao(@NotNull PortugolParser.Operador_aritmetico_secundario_concatenacaoContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link PortugolParser#itemParamVetor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitItemParamVetor(@NotNull PortugolParser.ItemParamVetorContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link PortugolParser#escolha}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -222,6 +229,13 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOperador_bit(@NotNull PortugolParser.Operador_bitContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link PortugolParser#itemParamVar}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitItemParamVar(@NotNull PortugolParser.ItemParamVarContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link PortugolParser#dec_lista_param}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -290,13 +304,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLeia(@NotNull PortugolParser.LeiaContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link PortugolParser#dec_item_param}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDec_item_param(@NotNull PortugolParser.Dec_item_paramContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#operador_comparacao_prioritario}.

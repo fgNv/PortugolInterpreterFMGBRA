@@ -178,6 +178,14 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitItemParamVetor(@NotNull PortugolParser.ItemParamVetorContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitEscolha(@NotNull PortugolParser.EscolhaContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -258,6 +266,14 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitItemParamVar(@NotNull PortugolParser.ItemParamVarContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitDec_lista_param(@NotNull PortugolParser.Dec_lista_paramContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -331,14 +347,6 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitLeia(@NotNull PortugolParser.LeiaContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitDec_item_param(@NotNull PortugolParser.Dec_item_paramContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

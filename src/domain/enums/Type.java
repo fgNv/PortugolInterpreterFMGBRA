@@ -10,10 +10,11 @@ package domain.enums;
  *
  * @author Felipe
  */
-public enum Tipo {
+public enum Type {
     inteiro,
     logico,
     cadeia,
     caracter,
-    real
+    real,
+    vazio
 }

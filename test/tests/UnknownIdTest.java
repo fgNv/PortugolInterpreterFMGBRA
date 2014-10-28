@@ -1,6 +1,7 @@
 package tests;
 
 
+import domain.LanguageManager;
 import helpers.TestHelpers;
 import domain.listeners.GatherSymbolsListener;
 import java.io.IOException;
@@ -21,7 +22,8 @@ public class UnknownIdTest {
     @Test
     public void DetectUndeclaredTokens() throws IOException {
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("UnknownId.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("UnknownId.txt", (s) -> manager.GetListener(s));
 
         Assert.assertEquals(3, listener.unknownUsedIds.size());
     }
@@ -29,7 +31,8 @@ public class UnknownIdTest {
     @Test
     public void DetectUndeclaredTokensDiffScopes() throws IOException {
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("UnknownIdDiffScopes.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("UnknownIdDiffScopes.txt", (s) -> manager.GetListener(s));
 
         Assert.assertEquals(1, listener.unknownUsedIds.size());
         Assert.assertEquals(3, listener.errors.size());

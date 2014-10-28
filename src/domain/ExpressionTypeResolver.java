@@ -7,8 +7,8 @@ package domain;
 
 import Antl4GeneratedMember.PortugolParser;
 import domain.enums.EnumHelper;
-import domain.enums.Operador;
-import domain.enums.Tipo;
+import domain.enums.Operator;
+import domain.enums.Type;
 import domain.listeners.GatherSymbolsListener;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,14 +41,14 @@ public class ExpressionTypeResolver {
         return null;
     }
 
-    private Tipo getOperandoType(PortugolParser.OperandoContext ctx) {
+    private TypeData getOperandoType(PortugolParser.OperandoContext ctx) {
         if (ctx.chamada_funcao() != null) {
 
             if (ctx.chamada_funcao().chamada_funcao_biblioteca() != null) {
                 throw new RuntimeException("Ainda não é possível avaliar tipo de retorno de funções de bibliotecas");
             } else {
                 String funcName = ctx.chamada_funcao().id_consumo().getText();
-                return listener.getFunctionType(funcName);
+                return new TypeData(listener.getFunctionType(funcName));
             }
         }
 
@@ -56,110 +56,112 @@ public class ExpressionTypeResolver {
             String idName = ctx.id_consumo().getText();
 
             if (listener.isThereAParamInCurrentFunctionCalled(idName)) {
-                return EnumHelper.TipoFromString(listener.getParamType(idName));
+                return listener.getParamType(idName) ;
             }
 
             if (listener.isThereAVariableCurrentScopeCalled(idName)) {
-                return EnumHelper.TipoFromString(listener.getVariableType(idName));
+                return listener.getVariableType(idName);
             }
 
             return null;
         }
 
-        return EnumHelper.TipoFromString(getValorConstanteType(ctx.valor_constante()));
+        return new TypeData(getValorConstanteType(ctx.valor_constante()));
     }
 
-    private Operador getTipoOperador(PortugolParser.ExpressaoContext ctx) {
+    private Operator getTipoOperador(PortugolParser.ExpressaoContext ctx) {
         if (ctx.operador_aritmetico_prioritario() != null || ctx.operador_aritmetico_secundario() != null) {
-            return Operador.aritmetico;
+            return Operator.aritmetico;
         } else if (ctx.operador_bit() != null) {
-            return Operador.bit;
+            return Operator.bit;
         } else if (ctx.operador_comparacao_prioritario() != null || ctx.operador_comparacao_secundario() != null) {
-            return Operador.comparacao;
+            return Operator.comparacao;
         } else if (ctx.operador_e_binario() != null || ctx.operador_ou_binario() != null) {
-            return Operador.binario;
+            return Operator.binario;
         } else if (ctx.operador_e_logico() != null || ctx.operador_ou_logico() != null) {
-            return Operador.logico;
+            return Operator.logico;
+        }else if(ctx.operador_aritmetico_secundario_concatenacao() != null){
+            return Operator.aritmeticoConcatenacao;
         }
 
         return null;
     }
 
-    private Tipo getTypeResult(Tipo tipoOperando, Operador operador) {
+    private TypeData getTypeResult(TypeData tipoOperando, Operator operador) {
         if (tipoOperando == null || operador == null) {
             return tipoOperando;
         }
-        if ((operador == Operador.aritmetico || operador == Operador.aritmeticoConcatenacao)
-                && (tipoOperando == Tipo.inteiro || tipoOperando == Tipo.real)) {
+        if ((operador == Operator.aritmetico || operador == Operator.aritmeticoConcatenacao)
+                && (tipoOperando.getType() == Type.inteiro || tipoOperando.getType() == Type.real)) {
             return tipoOperando;
-        } else if (operador == Operador.comparacao && (tipoOperando == Tipo.inteiro || tipoOperando == Tipo.real)) {
-            return Tipo.logico;
-        } else if (operador == Operador.aritmeticoConcatenacao && (tipoOperando == Tipo.caracter || tipoOperando == Tipo.cadeia)) {
-            return Tipo.caracter;
-        } else if (operador == Operador.logico && tipoOperando == Tipo.logico) {
-            return Tipo.logico;
+        } else if (operador == Operator.comparacao && (tipoOperando.getType() == Type.inteiro || tipoOperando.getType() == Type.real)) {
+            return new TypeData(Type.logico);
+        } else if (operador == Operator.aritmeticoConcatenacao && (tipoOperando.getType() == Type.caracter || tipoOperando.getType() == Type.cadeia)) {
+            return new TypeData(Type.caracter);
+        } else if (operador == Operator.logico && tipoOperando.getType() == Type.logico) {
+            return new TypeData(Type.logico);
         }
 
         listener.errors.add("Operando \"" + tipoOperando + "\" com operador \"" + operador + "\" é uma expressão inválida");
         return null;
     }
 
-    private Tipo getExpressionType(PortugolParser.ExpressaoContext ctx, Operador tipoOperadorArg) {
+    private TypeData getExpressionType(PortugolParser.ExpressaoContext ctx, Operator tipoOperadorArg) {
         if (ctx.operando() != null) {
-            Tipo operandoType = getOperandoType(ctx.operando());
+            TypeData operandoType = getOperandoType(ctx.operando());
             return getTypeResult(operandoType, tipoOperadorArg);
         }
-        Operador tipoOperador = getTipoOperador(ctx);
+        Operator tipoOperador = getTipoOperador(ctx);
 
-        List<Tipo> types = ctx.expressao().stream().map(e -> getExpressionType(e, tipoOperador)).collect(Collectors.toList());
+        List<TypeData> types = ctx.expressao().stream().map(e -> getExpressionType(e, tipoOperador)).collect(Collectors.toList());
 
         if (types.isEmpty() || types.stream().anyMatch(i -> i == null)) {
             return null;
         }
 
-        Tipo firstType = types.get(0);
+        TypeData firstType = types.get(0);
         if (types.stream().allMatch(i -> firstType.equals(i))) {
             return firstType;
         }
 
-        if (types.stream().allMatch(i -> i == Tipo.cadeia || i == Tipo.caracter)) {
-            return Tipo.cadeia;
+        if (types.stream().allMatch(i -> i.getType() == Type.cadeia || i.getType() == Type.caracter)) {
+            return new TypeData(Type.cadeia);
         }
 
-        if (types.stream().allMatch(i -> i == Tipo.real || i == Tipo.inteiro)) {
-            return Tipo.real;
+        if (types.stream().allMatch(i -> i.getType() == Type.real || i.getType() == Type.inteiro)) {
+            return new TypeData(Type.real);
         }
 
         listener.errors.add("Expressão com tipos incompatíveis");
         return null;
     }
 
-    public Tipo getExpressionType(PortugolParser.ExpressaoContext ctx, GatherSymbolsListener listener) {
+    public TypeData getExpressionType(PortugolParser.ExpressaoContext ctx, GatherSymbolsListener listener) {
         this.listener = listener;
 
         if (ctx.operando() != null) {
-            Tipo operandoType = getOperandoType(ctx.operando());
+            TypeData operandoType = getOperandoType(ctx.operando());
             return getTypeResult(operandoType, null);
         }
 
-        Operador tipoOperador = getTipoOperador(ctx);
-        List<Tipo> types = ctx.expressao().stream().map(e -> getExpressionType(e, tipoOperador)).collect(Collectors.toList());
+        Operator tipoOperador = getTipoOperador(ctx);
+        List<TypeData> types = ctx.expressao().stream().map(e -> getExpressionType(e, tipoOperador)).collect(Collectors.toList());
 
         if (types.isEmpty() || types.stream().anyMatch(i -> i == null)) {
             return null;
         }
 
-        Tipo firstType = types.get(0);
+        TypeData firstType = types.get(0);
         if (types.stream().allMatch(i -> firstType.equals(i))) {
             return firstType;
         }
 
-        if (types.stream().allMatch(i -> i == Tipo.cadeia || i == Tipo.caracter)) {
-            return Tipo.cadeia;
+        if (types.stream().allMatch(i -> i.getType() == Type.cadeia || i.getType() == Type.caracter)) {
+            return new TypeData(Type.cadeia);
         }
 
-        if (types.stream().allMatch(i -> i == Tipo.real || i == Tipo.inteiro)) {
-            return Tipo.real;
+        if (types.stream().allMatch(i -> i.getType() == Type.real || i.getType() == Type.inteiro)) {
+            return new TypeData(Type.real);
         }
 
         listener.errors.add("Expressão com tipos incompatíveis");

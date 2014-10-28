@@ -11,8 +11,8 @@ package domain;
  */
 public class Function extends BaseItem {
 
-    public Function(String name, String type) {
+    public Function(String name, TypeData type) {
+        super(type);
         setName(name);
-        setType(type);
     }
 }

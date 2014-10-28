@@ -1,6 +1,7 @@
 package tests;
 
 
+import domain.LanguageManager;
 import helpers.TestHelpers;
 import domain.listeners.GatherSymbolsListener;
 import java.io.IOException;
@@ -22,7 +23,8 @@ public class FunctionCallTest {
     @Test
     public void wrongParameterType() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("WrongFunctionCallParameter.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("WrongFunctionCallParameter.txt", (s) -> manager.GetListener(s));
 
         Assert.assertEquals(1, listener.errors.size());        
     }
@@ -30,7 +32,8 @@ public class FunctionCallTest {
     @Test
     public void wrongParameterTypeLongList() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("WrongFunctionCallParameterTypeLongList.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("WrongFunctionCallParameterTypeLongList.txt", (s) -> manager.GetListener(s));
 
         Assert.assertEquals(2, listener.errors.size());        
     }
@@ -38,7 +41,8 @@ public class FunctionCallTest {
     @Test
     public void wrongParameterQuantity() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("WrongFunctionCallParameterQuantity.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("WrongFunctionCallParameterQuantity.txt", (s) -> manager.GetListener(s));
 
         Assert.assertEquals(1, listener.errors.size());        
     }
@@ -46,7 +50,8 @@ public class FunctionCallTest {
     @Test
     public void correctParameterlessFunctionCall() throws IOException{
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("ParameterlessFunctionCall.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("ParameterlessFunctionCall.txt", (s) -> manager.GetListener(s));
 
         Assert.assertEquals(0, listener.errors.size());        
     }

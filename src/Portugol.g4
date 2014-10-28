@@ -18,9 +18,10 @@ inicializacao_vetor: '{' inicializacao_vetor (',' inicializacao_vetor)* '}' | '{
 dec_constante : CONST tipo ID '=' valor_constante;
 
 dec_lista_param : dec_item_param (',' dec_item_param)*;
-dec_item_param: tipo '&'? ID;
+dec_item_param: tipo '&'? ID #itemParamVar |
+                tipo dimensao+ ID #itemParamVetor ;
 
-dec_funcao : FUNCAO (tipo | 'vazio')? ID '(' dec_lista_param? ')' bloco;
+dec_funcao : FUNCAO (tipo dimensao* | 'vazio')? ID '(' dec_lista_param? ')' bloco;
 
 operando : id_consumo | valor_constante | chamada_funcao;
 

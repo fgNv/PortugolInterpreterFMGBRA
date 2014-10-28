@@ -9,7 +9,7 @@ package domain.enums;
  *
  * @author Felipe
  */
-public enum Operador {
+public enum Operator {
 
     aritmetico,
     aritmeticoConcatenacao,

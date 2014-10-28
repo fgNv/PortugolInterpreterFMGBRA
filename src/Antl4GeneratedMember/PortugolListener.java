@@ -229,6 +229,17 @@ public interface PortugolListener extends ParseTreeListener {
 	void exitOperador_aritmetico_secundario_concatenacao(@NotNull PortugolParser.Operador_aritmetico_secundario_concatenacaoContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link PortugolParser#itemParamVetor}.
+	 * @param ctx the parse tree
+	 */
+	void enterItemParamVetor(@NotNull PortugolParser.ItemParamVetorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PortugolParser#itemParamVetor}.
+	 * @param ctx the parse tree
+	 */
+	void exitItemParamVetor(@NotNull PortugolParser.ItemParamVetorContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link PortugolParser#escolha}.
 	 * @param ctx the parse tree
 	 */
@@ -339,6 +350,17 @@ public interface PortugolListener extends ParseTreeListener {
 	void exitOperador_bit(@NotNull PortugolParser.Operador_bitContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link PortugolParser#itemParamVar}.
+	 * @param ctx the parse tree
+	 */
+	void enterItemParamVar(@NotNull PortugolParser.ItemParamVarContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PortugolParser#itemParamVar}.
+	 * @param ctx the parse tree
+	 */
+	void exitItemParamVar(@NotNull PortugolParser.ItemParamVarContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link PortugolParser#dec_lista_param}.
 	 * @param ctx the parse tree
 	 */
@@ -447,17 +469,6 @@ public interface PortugolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLeia(@NotNull PortugolParser.LeiaContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link PortugolParser#dec_item_param}.
-	 * @param ctx the parse tree
-	 */
-	void enterDec_item_param(@NotNull PortugolParser.Dec_item_paramContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PortugolParser#dec_item_param}.
-	 * @param ctx the parse tree
-	 */
-	void exitDec_item_param(@NotNull PortugolParser.Dec_item_paramContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link PortugolParser#operador_comparacao_prioritario}.

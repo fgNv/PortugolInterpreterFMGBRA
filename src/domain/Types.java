@@ -10,10 +10,12 @@ package domain;
  *
  * @author Felipe
  */
-public class Tipos {
+public class Types {
     public static final String CADEIA = "cadeia";
     public static final String LOGICO = "logico";
     public static final String INTEIRO = "inteiro";
     public static final String REAL = "real";
     public static final String CARACTER = "caracter";
+    public static final String VAZIO = "vazio";
+    
 }

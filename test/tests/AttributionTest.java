@@ -5,6 +5,7 @@
  */
 package tests;
 
+import domain.LanguageManager;
 import domain.listeners.GatherSymbolsListener;
 import helpers.TestHelpers;
 import java.io.IOException;
@@ -20,7 +21,8 @@ public class AttributionTest {
     @Test
     public void attributionToFunction() throws IOException {
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("AttributionToFunction.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("AttributionToFunction.txt", (s) -> manager.GetListener(s));
         
         Assert.assertEquals(1, listener.errors.size()); 
     }

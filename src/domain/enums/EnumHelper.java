@@ -5,7 +5,7 @@
  */
 package domain.enums;
 
-import domain.Tipos;
+import domain.Types;
 
 /**
  *
@@ -13,24 +13,26 @@ import domain.Tipos;
  */
 public class EnumHelper {
 
-    public static Tipo TipoFromString(String tipo) {
+    public static Type TipoFromString(String tipo) {
         switch (tipo) {
-            case Tipos.CADEIA:
-                return Tipo.cadeia;
-            case Tipos.CARACTER:
-                return Tipo.caracter;
-            case Tipos.INTEIRO:
-                return Tipo.inteiro;
-            case Tipos.LOGICO:
-                return Tipo.logico;
-            case Tipos.REAL:
-                return Tipo.real;
+            case Types.CADEIA:
+                return Type.cadeia;
+            case Types.CARACTER:
+                return Type.caracter;
+            case Types.INTEIRO:
+                return Type.inteiro;
+            case Types.LOGICO:
+                return Type.logico;
+            case Types.REAL:
+                return Type.real;
+            case Types.VAZIO:
+                return Type.vazio;
         }
 
         throw new RuntimeException("Tipo \"" + tipo + "\" não encontrado em \"TipoFromString\" ");
     }
 
-    public static String asString(Tipo tipo) {
+    public static String asString(Type tipo) {
         if (tipo == null) {
             return null;
         }
@@ -46,12 +48,14 @@ public class EnumHelper {
                 return "logico";
             case real:
                 return "real";
+            case vazio:
+                return "vazio";
         }
 
         return null;
     }
 
-    public static String asString(Operador operador) {
+    public static String asString(Operator operador) {
 
         switch (operador) {
             case aritmetico:

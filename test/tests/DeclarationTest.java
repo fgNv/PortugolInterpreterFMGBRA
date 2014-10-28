@@ -6,6 +6,7 @@
 
 package tests;
 
+import domain.LanguageManager;
 import domain.listeners.GatherSymbolsListener;
 import helpers.TestHelpers;
 import java.io.IOException;
@@ -21,7 +22,8 @@ public class DeclarationTest {
     @Test
     public void duplicatedTokenDeclared() throws IOException{
          TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("DuplicatedToken.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("DuplicatedToken.txt", (s) -> manager.GetListener(s));
 
         Assert.assertEquals(1, listener.errors.size());
     }

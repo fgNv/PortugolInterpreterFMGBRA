@@ -3,6 +3,7 @@ package tests;
 
 import helpers.TestHelpers;
 import domain.Function;
+import domain.LanguageManager;
 import domain.Variable;
 import domain.listeners.GatherSymbolsListener;
 import java.io.IOException;
@@ -19,7 +20,8 @@ public class SymbolTableTest {
     public void GetVariablesTypesAndScopes() throws IOException{
         
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("ThirdLevelScope.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("ThirdLevelScope.txt", (s) -> manager.GetListener(s));
                 
         Variable test = listener.variables.get(0);
         Assert.assertEquals("inteiro", test.getType());

@@ -29,7 +29,7 @@ public class LexiconErrorMessageStoreHandler implements ANTLRErrorListener {
     
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int charPositionInLine, String msg, RecognitionException re) {
-        String mensagem = "Erro sintático na linha " + line + ", coluna " + charPositionInLine + ": " + msg;        
+        String mensagem = "Erro léxico na linha " + line + ", coluna " + charPositionInLine + ": " + msg;        
         _errors.add(mensagem);
     }
 

@@ -277,6 +277,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterItemParamVetor(@NotNull PortugolParser.ItemParamVetorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitItemParamVetor(@NotNull PortugolParser.ItemParamVetorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEscolha(@NotNull PortugolParser.EscolhaContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -407,6 +420,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterItemParamVar(@NotNull PortugolParser.ItemParamVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitItemParamVar(@NotNull PortugolParser.ItemParamVarContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDec_lista_param(@NotNull PortugolParser.Dec_lista_paramContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -531,19 +557,6 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLeia(@NotNull PortugolParser.LeiaContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDec_item_param(@NotNull PortugolParser.Dec_item_paramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDec_item_param(@NotNull PortugolParser.Dec_item_paramContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

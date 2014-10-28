@@ -1,8 +1,8 @@
 package tests;
 
 
+import domain.LanguageManager;
 import helpers.TestHelpers;
-import domain.listeners.GatherFunctionNamesListener;
 import domain.listeners.GatherSymbolsListener;
 import java.io.IOException;
 import junit.framework.Assert;
@@ -16,18 +16,19 @@ public class TreeTest {
 
     @Test
     public void GetFunctions() throws IOException {
-        TestHelpers<GatherFunctionNamesListener> helper = new TestHelpers<>();
-        GatherFunctionNamesListener listener = helper.getListener("CorrectSyntax.txt", () -> new GatherFunctionNamesListener());
+        TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("CorrectSyntax.txt", (s) -> manager.GetListener(s));
         Assert.assertEquals(3, listener.functions.size());
     }
 
     @Test
     public void GetSymbols() throws IOException {        
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
-        GatherSymbolsListener listener = helper.getListener("CorrectSyntax.txt", () -> new GatherSymbolsListener());
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("CorrectSyntax.txt", (s) -> manager.GetListener(s));
         
         Assert.assertEquals(3, listener.functions.size());
-        Assert.assertEquals(2, listener.variables.size());
-        Assert.assertEquals(1, listener.vectors.size());
+        Assert.assertEquals(3, listener.variables.size());
     }
 }

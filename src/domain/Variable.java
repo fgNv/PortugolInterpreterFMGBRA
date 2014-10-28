@@ -5,6 +5,7 @@
  */
 package domain;
 
+import domain.enums.EnumHelper;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -16,16 +17,17 @@ import javafx.beans.property.StringProperty;
  *
  * @author Felipe
  */
-public class Variable extends BaseItem{
+public class Variable extends BaseItem {
 
     private final IntegerProperty scope = new SimpleIntegerProperty();
     private final StringProperty function = new SimpleStringProperty();
     private final BooleanProperty isInitialized = new SimpleBooleanProperty();
 
-    public Variable(String name, int scope, String type, String function) {
+
+    public Variable(String name, int scope, TypeData type, String function) {
+        super(type);
         setName(name);
         setScope(scope);
-        setType(type);
         setFunction(function);
     }
 
@@ -44,13 +46,13 @@ public class Variable extends BaseItem{
     public final void setFunction(String fName) {
         function.set(fName);
     }
-    
-    public void setIsInitialized(boolean isInitialized){
+
+    public void setIsInitialized(boolean isInitialized) {
         this.isInitialized.set(isInitialized);
     }
-    
-    public boolean getIsInitialized(){
+
+    public boolean getIsInitialized() {
         return this.isInitialized.get();
     }
-    
+
 }

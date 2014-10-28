@@ -1,6 +1,6 @@
 programa{
     funcao oi(){
-        Cadeia ola
+        cadeia ola
 
         ola = "asdasdsa" + "asdasdsa" + 5 + 'S'
     }
