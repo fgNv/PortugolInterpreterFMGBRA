@@ -97,7 +97,7 @@ public class ExpressionTypeResolver {
         } else if (operador == Operator.comparacao && (tipoOperando.getType() == Type.inteiro || tipoOperando.getType() == Type.real)) {
             return new TypeData(Type.logico);
         } else if (operador == Operator.aritmeticoConcatenacao && (tipoOperando.getType() == Type.caracter || tipoOperando.getType() == Type.cadeia)) {
-            return new TypeData(Type.caracter);
+            return new TypeData(Type.cadeia);
         } else if (operador == Operator.logico && tipoOperando.getType() == Type.logico) {
             return new TypeData(Type.logico);
         }

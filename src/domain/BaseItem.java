@@ -33,7 +33,11 @@ public abstract class BaseItem {
     public void setName(String fName) {
         name.set(fName);
     }
-
+    
+    public TypeData getTypeData(){
+        return this.typeData;
+    }
+    
     public String getType() {
         return EnumHelper.asString(typeData.getType());
     }

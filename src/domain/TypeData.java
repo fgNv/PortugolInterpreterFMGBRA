@@ -6,6 +6,7 @@
 package domain;
 
 import domain.enums.EnumHelper;
+import domain.enums.Operator;
 import domain.enums.Type;
 
 /**
@@ -31,7 +32,7 @@ public class TypeData {
     }
 
     public TypeData(String type, int dimensions) {
-        this(EnumHelper.TipoFromString(type),dimensions);
+        this(EnumHelper.TipoFromString(type), dimensions);
     }
 
     public TypeData(String type) {
@@ -48,6 +49,27 @@ public class TypeData {
 
     public boolean isArray() {
         return array;
+    }
+
+    public String getDescription() {
+        return EnumHelper.asString(this.getType()) + (this.isArray() ? "(vetor)" : "");
+    }
+
+    @Override
+    public boolean equals(Object another) {
+        if (!(another instanceof TypeData)) {
+            return false;
+        }
+
+        TypeData casted = (TypeData) another;
+
+        return this.type == casted.type && this.isArray() == casted.isArray();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
     }
 
 }

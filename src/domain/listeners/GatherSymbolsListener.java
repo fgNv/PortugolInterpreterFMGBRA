@@ -216,13 +216,12 @@ public class GatherSymbolsListener extends PortugolBaseListener {
         ObjectRetriever<Variable> o = new ObjectRetriever<>();
 
         Variable variable = o.getItemByName(variableName, variables);
-        String expectedType = variable.getType();
+        TypeData expectedType = variable.getTypeData();
         ExpressionTypeResolver expressionTypeResolver = new ExpressionTypeResolver();
         TypeData givenType = expressionTypeResolver.getExpressionType(ctx.expressao(), this);
-        String givenTypeStr = givenType == null ? null : EnumHelper.asString(givenType.getType());
 
-        if (givenType != null && !expectedType.equals(givenTypeStr)) {
-            errors.add("tipo esperado era \" " + expectedType + " \", \"" + givenType + "\" fornecido");
+        if (givenType != null && !expectedType.equals(givenType)) {
+            errors.add("tipo esperado era \" " + expectedType.getDescription() + " \", \"" + givenType.getDescription() + "\" fornecido");
             return;
         }
 
