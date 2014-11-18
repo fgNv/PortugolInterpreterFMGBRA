@@ -1,0 +1,7 @@
+.data
+    ola 0
+.text
+    _inicio:
+    LDI 3
+    STO ola
+    HLT 0

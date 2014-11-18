@@ -20,7 +20,8 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
 
     private IResolver expressionResolver;
     private final String newline = System.getProperty("line.separator");
-    private String assembly = "";
+    private String text = "";
+    private String data = "";
     private String currentOperation = null;
     private boolean firstOperandoAdded = false;
     private Symbols symbols;
@@ -78,23 +79,31 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
     }
 
     public String getAssembly() {
-        return assembly;
+        return text;
+    }
+
+    @Override
+    public void enterDec_funcao(PortugolParser.Dec_funcaoContext ctx) {
+        this.text = "_" + ctx.ID().getText() + ":" + newline;
     }
 
     @Override
     public void exitAlteracaoAtribuicao(PortugolParser.AlteracaoAtribuicaoContext ctx) {
-        assembly += expressionResolver.resolve();
+        text += expressionResolver.resolve();
         expressionResolver = null;
     }
 
     @Override
     public void SetSymbolTable(Symbols symbols) {
         this.symbols = symbols;
+        this.data = ".data";
+        this.data += symbols.variables.stream().map(i -> i.getName()).reduce("", (c, i) -> c + "\t" + i + " 0" + newline);
+        this.data += symbols.parameters.stream().map(i -> i.getName()).reduce("", (c, i) -> c + "\t" + i + " 0" + newline);
     }
 
     @Override
     public String getText() {
-        return assembly;
+        return data + text + "HLT 0";
     }
 
     @Override
