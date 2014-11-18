@@ -15,7 +15,7 @@ import domain.assemblyResolver.OperandoResolver;
  *
  * @author Felipe
  */
-public class PortugolAssemblyListener extends PortugolBaseListener {
+public class BIPAssemblyListener extends PortugolBaseListener {
 
     private IResolver expressionResolver;
     private final String newline = System.getProperty("line.separator");
