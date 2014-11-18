@@ -3014,27 +3014,70 @@ public class PortugolParser extends Parser {
 	}
 
 	public static class AlteracaoValorVariavelContext extends ParserRuleContext {
-		public AtribuicaoContext atribuicao() {
-			return getRuleContext(AtribuicaoContext.class,0);
-		}
-		public Id_consumoContext id_consumo() {
-			return getRuleContext(Id_consumoContext.class,0);
-		}
 		public AlteracaoValorVariavelContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_alteracaoValorVariavel; }
+	 
+		public AlteracaoValorVariavelContext() { }
+		public void copyFrom(AlteracaoValorVariavelContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class AlteracaoAtribuicaoContext extends AlteracaoValorVariavelContext {
+		public AtribuicaoContext atribuicao() {
+			return getRuleContext(AtribuicaoContext.class,0);
+		}
+		public AlteracaoAtribuicaoContext(AlteracaoValorVariavelContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).enterAlteracaoValorVariavel(this);
+			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).enterAlteracaoAtribuicao(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).exitAlteracaoValorVariavel(this);
+			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).exitAlteracaoAtribuicao(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAlteracaoValorVariavel(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAlteracaoAtribuicao(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AlteracaoIncrementoContext extends AlteracaoValorVariavelContext {
+		public Id_consumoContext id_consumo() {
+			return getRuleContext(Id_consumoContext.class,0);
+		}
+		public AlteracaoIncrementoContext(AlteracaoValorVariavelContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).enterAlteracaoIncremento(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).exitAlteracaoIncremento(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAlteracaoIncremento(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AlteracaoDecrementoContext extends AlteracaoValorVariavelContext {
+		public Id_consumoContext id_consumo() {
+			return getRuleContext(Id_consumoContext.class,0);
+		}
+		public AlteracaoDecrementoContext(AlteracaoValorVariavelContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).enterAlteracaoDecremento(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PortugolListener ) ((PortugolListener)listener).exitAlteracaoDecremento(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAlteracaoDecremento(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3046,6 +3089,7 @@ public class PortugolParser extends Parser {
 			setState(482);
 			switch ( getInterpreter().adaptivePredict(_input,43,_ctx) ) {
 			case 1:
+				_localctx = new AlteracaoAtribuicaoContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(475); atribuicao();
@@ -3053,6 +3097,7 @@ public class PortugolParser extends Parser {
 				break;
 
 			case 2:
+				_localctx = new AlteracaoIncrementoContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(476); id_consumo();
@@ -3061,6 +3106,7 @@ public class PortugolParser extends Parser {
 				break;
 
 			case 3:
+				_localctx = new AlteracaoDecrementoContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(479); id_consumo();

@@ -90,7 +90,7 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAlteracaoIncremento(@NotNull PortugolParser.AlteracaoIncrementoContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -362,6 +362,14 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitAlteracaoDecremento(@NotNull PortugolParser.AlteracaoDecrementoContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitOperando(@NotNull PortugolParser.OperandoContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -403,6 +411,14 @@ public class PortugolBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitChamada_funcao(@NotNull PortugolParser.Chamada_funcaoContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAlteracaoAtribuicao(@NotNull PortugolParser.AlteracaoAtribuicaoContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

@@ -71,7 +71,10 @@ chamada_funcao_biblioteca : id_consumo'.'ID ;
 param_funcao: '(' (expressao (',' expressao)*)? ')'; 
 retorno : RETORNE expressao;
 
-alteracaoValorVariavel : atribuicao | id_consumo'++' | id_consumo'--';
+alteracaoValorVariavel : atribuicao #alteracaoAtribuicao |
+                         id_consumo'++' #alteracaoIncremento|
+                         id_consumo'--' #alteracaoDecremento;
+
 atribuicao : id_consumo ('=' | '+=' | '-=' | '/=' | '*=' | '%=') expressao;
 operador : SOMA | SUBTRACAO | DIVISAO | MULTIPLICACAO | MAIOR | MENOR | MAIOR_IGUAL | MENOR_IGUAL | DIFERENTE; 
 

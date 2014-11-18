@@ -134,13 +134,13 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx) { }
+	@Override public void enterAlteracaoIncremento(@NotNull PortugolParser.AlteracaoIncrementoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx) { }
+	@Override public void exitAlteracaoIncremento(@NotNull PortugolParser.AlteracaoIncrementoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -576,6 +576,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAlteracaoDecremento(@NotNull PortugolParser.AlteracaoDecrementoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAlteracaoDecremento(@NotNull PortugolParser.AlteracaoDecrementoContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOperando(@NotNull PortugolParser.OperandoContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -648,6 +661,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitChamada_funcao(@NotNull PortugolParser.Chamada_funcaoContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAlteracaoAtribuicao(@NotNull PortugolParser.AlteracaoAtribuicaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAlteracaoAtribuicao(@NotNull PortugolParser.AlteracaoAtribuicaoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

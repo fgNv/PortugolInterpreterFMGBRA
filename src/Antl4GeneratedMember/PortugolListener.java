@@ -108,15 +108,15 @@ public interface PortugolListener extends ParseTreeListener {
 	void exitOperador_ou_logico(@NotNull PortugolParser.Operador_ou_logicoContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link PortugolParser#alteracaoValorVariavel}.
+	 * Enter a parse tree produced by {@link PortugolParser#alteracaoIncremento}.
 	 * @param ctx the parse tree
 	 */
-	void enterAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx);
+	void enterAlteracaoIncremento(@NotNull PortugolParser.AlteracaoIncrementoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PortugolParser#alteracaoValorVariavel}.
+	 * Exit a parse tree produced by {@link PortugolParser#alteracaoIncremento}.
 	 * @param ctx the parse tree
 	 */
-	void exitAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx);
+	void exitAlteracaoIncremento(@NotNull PortugolParser.AlteracaoIncrementoContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link PortugolParser#operador_e_binario}.
@@ -482,6 +482,17 @@ public interface PortugolListener extends ParseTreeListener {
 	void exitOperador_comparacao_prioritario(@NotNull PortugolParser.Operador_comparacao_prioritarioContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link PortugolParser#alteracaoDecremento}.
+	 * @param ctx the parse tree
+	 */
+	void enterAlteracaoDecremento(@NotNull PortugolParser.AlteracaoDecrementoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PortugolParser#alteracaoDecremento}.
+	 * @param ctx the parse tree
+	 */
+	void exitAlteracaoDecremento(@NotNull PortugolParser.AlteracaoDecrementoContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link PortugolParser#operando}.
 	 * @param ctx the parse tree
 	 */
@@ -546,6 +557,17 @@ public interface PortugolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitChamada_funcao(@NotNull PortugolParser.Chamada_funcaoContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link PortugolParser#alteracaoAtribuicao}.
+	 * @param ctx the parse tree
+	 */
+	void enterAlteracaoAtribuicao(@NotNull PortugolParser.AlteracaoAtribuicaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PortugolParser#alteracaoAtribuicao}.
+	 * @param ctx the parse tree
+	 */
+	void exitAlteracaoAtribuicao(@NotNull PortugolParser.AlteracaoAtribuicaoContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link PortugolParser#chamada_funcao_biblioteca}.

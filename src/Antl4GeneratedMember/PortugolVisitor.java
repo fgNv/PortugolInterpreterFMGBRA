@@ -75,11 +75,11 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOperador_ou_logico(@NotNull PortugolParser.Operador_ou_logicoContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#alteracaoValorVariavel}.
+	 * Visit a parse tree produced by {@link PortugolParser#alteracaoIncremento}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAlteracaoValorVariavel(@NotNull PortugolParser.AlteracaoValorVariavelContext ctx);
+	T visitAlteracaoIncremento(@NotNull PortugolParser.AlteracaoIncrementoContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#operador_e_binario}.
@@ -313,6 +313,13 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOperador_comparacao_prioritario(@NotNull PortugolParser.Operador_comparacao_prioritarioContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link PortugolParser#alteracaoDecremento}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAlteracaoDecremento(@NotNull PortugolParser.AlteracaoDecrementoContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link PortugolParser#operando}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -353,6 +360,13 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitChamada_funcao(@NotNull PortugolParser.Chamada_funcaoContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link PortugolParser#alteracaoAtribuicao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAlteracaoAtribuicao(@NotNull PortugolParser.AlteracaoAtribuicaoContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#chamada_funcao_biblioteca}.
