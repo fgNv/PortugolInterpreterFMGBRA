@@ -25,10 +25,15 @@ public class TestHelpers<T extends PortugolBaseListener> {
     }
 
     public T getListener(String inputUrl, PortugolBaseListenerConstuct<T> constructor) throws IOException {
-        URL url = getClass().getResource(inputUrl);
-        String input = FileHelper.GetStringFromFile(url.getPath());
+        String input = getInput(inputUrl);
         T listener = constructor.construct(input);
 
         return listener;
+    }
+    
+    public String getInput(String inputUrl) throws IOException{
+        URL url = getClass().getResource(inputUrl);
+        String input = FileHelper.GetStringFromFile(url.getPath());
+        return input;
     }
 }

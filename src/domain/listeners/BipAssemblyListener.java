@@ -7,6 +7,7 @@ package domain.listeners;
 
 import Antl4GeneratedMember.PortugolBaseListener;
 import Antl4GeneratedMember.PortugolParser;
+import domain.Symbols;
 import domain.assemblyResolver.AttributionResolver;
 import domain.assemblyResolver.IResolver;
 import domain.assemblyResolver.OperandoResolver;
@@ -15,13 +16,14 @@ import domain.assemblyResolver.OperandoResolver;
  *
  * @author Felipe
  */
-public class BipAssemblyListener extends PortugolBaseListener {
+public class BipAssemblyListener extends PortugolBaseListener implements IAssemblyGeneratorListener{
 
     private IResolver expressionResolver;
     private final String newline = System.getProperty("line.separator");
     private String assembly = "";
     private String currentOperation = null;
     private boolean firstOperandoAdded = false;
+    private Symbols symbols;
 
     @Override
     public void enterAlteracaoAtribuicao(PortugolParser.AlteracaoAtribuicaoContext ctx) {
@@ -83,6 +85,21 @@ public class BipAssemblyListener extends PortugolBaseListener {
     public void exitAlteracaoAtribuicao(PortugolParser.AlteracaoAtribuicaoContext ctx) {
         assembly += expressionResolver.resolve();
         expressionResolver = null;
+    }
+
+    @Override
+    public void SetSymbolTable(Symbols symbols) {
+        this.symbols = symbols;
+    }
+
+    @Override
+    public String getText() {
+        return assembly;
+    }
+
+    @Override
+    public PortugolBaseListener getListener() {
+        return this;
     }
 
 }

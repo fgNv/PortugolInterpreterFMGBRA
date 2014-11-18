@@ -10,6 +10,7 @@ import domain.ExpressionTypeResolver;
 import domain.Function;
 import domain.Parameter;
 import domain.ParameterComparison;
+import domain.Symbols;
 import domain.TypeData;
 import domain.enums.EnumHelper;
 import domain.enums.Type;
@@ -57,6 +58,10 @@ public class GatherSymbolsListener extends PortugolBaseListener {
             this.scopeDepth = scopeDepth;
             this.scopeId = scopeId;
         }
+    }
+    
+    public Symbols getSymbols(){
+        return new Symbols(variables,functions,parameters,errors, warnings);
     }
 
     private void checkDuplicatesOnDecVar(String token) {

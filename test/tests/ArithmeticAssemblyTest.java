@@ -9,6 +9,7 @@ import domain.LanguageManager;
 import domain.Symbols;
 import domain.listeners.BipAssemblyListener;
 import domain.listeners.GatherSymbolsListener;
+import helpers.AssemblyGenerator;
 import helpers.TestHelpers;
 import java.io.IOException;
 import junit.framework.Assert;
@@ -26,14 +27,14 @@ public class ArithmeticAssemblyTest {
         TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
         LanguageManager manager = new LanguageManager();
         GatherSymbolsListener listener = helper.getListener(inputFileName, (s) -> manager.GetListener(s));
-//        Symbols symbols = listener.getSymbols();
-//        String input = helper.getInput(inputFileName);
+        Symbols symbols = listener.getSymbols();
+        String input = helper.getInput(inputFileName);
         BipAssemblyListener generatorListener = new BipAssemblyListener();
-//        AssemblyGenerator generator = new AssemblyGenerator(generatorListener, symbols, input);
-//        String assembly = generator.generateAssembly();
-//        String expected = helper.getInput("SimpleAttributionExpectedAssembly.txt");
+        AssemblyGenerator generator = new AssemblyGenerator(generatorListener, symbols, input);
+        String assembly = generator.generateAssembly();
+        String expected = helper.getInput("SimpleAttributionExpectedAssembly.txt");
 
-//        Assert.assertEquals(expected, assembly);
+        Assert.assertEquals(expected, assembly);
 
     }
 }
