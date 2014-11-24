@@ -1,0 +1,12 @@
+.data
+    z 0
+    a 0
+.text
+    _inicio:
+    LDI 2
+    STO z
+    LDI 5
+    ADDI 3
+    ADD z
+    STO a
+    HLT 0

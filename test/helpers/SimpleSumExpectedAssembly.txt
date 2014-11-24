@@ -1,0 +1,8 @@
+.data
+    a 0
+.text
+    _inicio:
+    LDI 5
+    ADDI 3
+    STO a
+    HLT 0

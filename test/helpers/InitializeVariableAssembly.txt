@@ -1,0 +1,7 @@
+programa{
+    funcao inicio(){
+        inteiro z = 2   
+        inteiro a
+        a = 5 + 3 + z
+    }
+}

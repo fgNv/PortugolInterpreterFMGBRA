@@ -1,0 +1,12 @@
+.data
+    a 0
+    b 0
+.text
+    _inicio:
+    LDI 5
+    ADDI 3
+    STO a
+    LD a
+    SUBI 4
+    STO b
+    HLT 0

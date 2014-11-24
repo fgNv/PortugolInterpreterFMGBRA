@@ -20,7 +20,7 @@ public class AttributionResolver extends DefaultResolver {
     
     @Override
     public String resolve() {
-        return getNext().resolve() + " " + cmd;
+        return getNext().resolve() + cmd;
     }
     
 }

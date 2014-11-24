@@ -20,7 +20,12 @@ public class OperandoResolver extends DefaultResolver{
     
     @Override
     public String resolve() {
-        return cmd;
+        
+        IResolver next = getNext();
+        if(next == null)
+            return cmd;
+        
+        return cmd + next.resolve();
     }
     
 }
