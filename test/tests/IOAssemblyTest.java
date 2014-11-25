@@ -34,4 +34,15 @@ public class IOAssemblyTest {
         String result = assemblyTestHelper.getResult().trim();
         Assert.assertEquals(expected, result);
     }
+    
+    @Test
+    public void ExpressionSumEscreva() throws IOException {
+        String inputFileName = "ExpressionSumEscreva.txt";
+        String expectedFileName = "ExpressionSumEscrevaExpectedAssembly.txt";
+        IAssemblyGeneratorListener generatorListener = new BipAssemblyListener();
+        AssemblyTestHelper assemblyTestHelper = new AssemblyTestHelper(inputFileName, expectedFileName, generatorListener);
+        String expected = assemblyTestHelper.getExpected().trim();
+        String result = assemblyTestHelper.getResult().trim();
+        Assert.assertEquals(expected, result);
+    }
 }

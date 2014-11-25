@@ -97,6 +97,17 @@ public interface PortugolListener extends ParseTreeListener {
 	void exitCaso(@NotNull PortugolParser.CasoContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link PortugolParser#item_param}.
+	 * @param ctx the parse tree
+	 */
+	void enterItem_param(@NotNull PortugolParser.Item_paramContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PortugolParser#item_param}.
+	 * @param ctx the parse tree
+	 */
+	void exitItem_param(@NotNull PortugolParser.Item_paramContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link PortugolParser#operador_ou_logico}.
 	 * @param ctx the parse tree
 	 */

@@ -122,8 +122,8 @@ leia: LEIA'(' ID (',' ID)* ')';
 ESCREVA : 'escreva';
 escreva:  ESCREVA '(' lista_param ')';
 LIMPA : 'limpa';
-lista_param : expressao (',' expressao)* ;
-//item_param : expressao;
+lista_param : item_param (',' item_param)* ;
+item_param : expressao;
 
 /*
 * Operadores Aritméticos

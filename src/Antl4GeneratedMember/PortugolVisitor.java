@@ -68,6 +68,13 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	T visitCaso(@NotNull PortugolParser.CasoContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link PortugolParser#item_param}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitItem_param(@NotNull PortugolParser.Item_paramContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link PortugolParser#operador_ou_logico}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -121,6 +121,19 @@ public class PortugolBaseListener implements PortugolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterItem_param(@NotNull PortugolParser.Item_paramContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitItem_param(@NotNull PortugolParser.Item_paramContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOperador_ou_logico(@NotNull PortugolParser.Operador_ou_logicoContext ctx) { }
 	/**
 	 * {@inheritDoc}

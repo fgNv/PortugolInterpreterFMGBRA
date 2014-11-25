@@ -107,10 +107,11 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
     }
 
     @Override
-    public void exitExpressao(PortugolParser.ExpressaoContext ctx) {
+    public void exitItem_param(PortugolParser.Item_paramContext ctx) {
         if (isInEscreva) {
             text += globalResolver.resolve();
-            globalResolver = new AttributionResolver(identation + "STO $out_port \n");
+            firstOperandoAdded = false;
+            globalResolver = new AttributionResolver(identation + "STO $out_port\n");
         }
     }
 
@@ -158,7 +159,7 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         String cmds = ctx.ID().stream()
                 .map(x -> identation + "LD $in_port" + "\n" + identation + "STO " + x.getText() + "\n")
                 .reduce("", (acc, i) -> acc + i);
-        
+
         text += cmds;
     }
 
