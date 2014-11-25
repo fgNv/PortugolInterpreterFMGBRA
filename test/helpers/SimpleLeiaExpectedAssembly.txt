@@ -1,0 +1,7 @@
+.data
+    oi : 0
+.text
+    _inicio:
+    LD $in_port
+    STO oi
+    HLT 0

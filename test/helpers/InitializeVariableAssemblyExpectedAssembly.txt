@@ -1,6 +1,6 @@
 .data
-    z 0
-    a 0
+    z : 0
+    a : 0
 .text
     _inicio:
     LDI 2

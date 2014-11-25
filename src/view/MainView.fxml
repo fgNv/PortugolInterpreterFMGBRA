@@ -22,9 +22,12 @@
     </padding>
     <Label GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3">Portugol Parser</Label>
     
-    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="3" GridPane.hgrow="always" GridPane.vgrow="always" >
+    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="3" GridPane.hgrow="always" GridPane.vgrow="always" >                        
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Código</Label>
-        <CodeArea fx:id="codeArea" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always"/>
+        <CodeArea fx:id="codeArea" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always" />
+        
+        <Label GridPane.columnIndex="1" GridPane.rowIndex="0">Assembly</Label>
+        <Label GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="assembly"></Label>
     </GridPane>
     
     <GridPane GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="4" >

@@ -8,6 +8,9 @@ package view;
 import domain.LanguageManager;
 import domain.Symbols;
 import domain.TokensProvider;
+import domain.listeners.BipAssemblyListener;
+import domain.listeners.IAssemblyGeneratorListener;
+import helpers.AssemblyGenerator;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,6 +23,7 @@ import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import org.fxmisc.richtext.CodeArea;
@@ -46,6 +50,8 @@ public class MainViewController implements Initializable {
     public CodeArea codeArea;
     @FXML
     public TableView parameters;
+    @FXML
+    public Label assembly;
     
     private final Pattern keywordPattern = TokensProvider.getTokensPattern();
     
@@ -55,7 +61,10 @@ public class MainViewController implements Initializable {
         Task<Void> task = new Task() {
             @Override
             protected Void call() throws Exception {
-                obterSimbolos(newValue);
+                Symbols symbols = obterSimbolos(newValue);
+                
+                AssemblyGenerator generator = new AssemblyGenerator(new BipAssemblyListener(), symbols, newValue);
+                assembly.setText(generator.generateAssembly());
                 return null;
             }
         };
@@ -94,13 +103,14 @@ public class MainViewController implements Initializable {
         SetupCodeArea();
     }
 
-    private void obterSimbolos(String input) {
+    private Symbols obterSimbolos(String input) {
         Symbols symbols = manager.GetVariableList(input);
         variables.setItems(FXCollections.observableList(symbols.variables));
         functions.setItems(FXCollections.observableList(symbols.functions));
         parameters.setItems(FXCollections.observableList(symbols.parameters));
         warnings.setItems(FXCollections.observableList(symbols.warnings));
         errors.setItems(FXCollections.observableList(symbols.errors));
+        return symbols;
     }
 
     private StyleSpans<Collection<String>> computeHighlighting(String text) {

@@ -123,6 +123,7 @@ ESCREVA : 'escreva';
 escreva:  ESCREVA '(' lista_param ')';
 LIMPA : 'limpa';
 lista_param : expressao (',' expressao)* ;
+//item_param : expressao;
 
 /*
 * Operadores Aritméticos
@@ -192,7 +193,7 @@ ID : [A-Za-z][A-Za-z0-9_]*;
 ALIAS_BIBLIOTECA : '-->';
 
 /*
-*Coment�rios
+*Comentários
 */
 LINE_COMMENT : '//' .*? '\r'? '\n' -> skip ;
 COMMENT : '/*' .*? '*/' -> skip;

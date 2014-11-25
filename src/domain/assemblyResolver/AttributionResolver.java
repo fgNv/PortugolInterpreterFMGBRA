@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package domain.assemblyResolver;
 
 /**
@@ -20,7 +14,11 @@ public class AttributionResolver extends DefaultResolver {
     
     @Override
     public String resolve() {
-        return getNext().resolve() + cmd;
+        IResolver next = getNext();
+        if(next == null)
+            return cmd;
+        
+        return next.resolve() + cmd;
     }
     
 }

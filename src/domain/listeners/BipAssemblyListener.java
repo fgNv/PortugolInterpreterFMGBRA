@@ -19,18 +19,19 @@ import domain.assemblyResolver.OperandoResolver;
  */
 public class BipAssemblyListener extends PortugolBaseListener implements IAssemblyGeneratorListener {
 
-    private IResolver expressionResolver;
+    private IResolver globalResolver;
     private final String newline = System.getProperty("line.separator");
     private String text = ".text" + newline;
     private String data = "";
     private String currentOperation = null;
     private boolean firstOperandoAdded = false;
     private final String identation = "    ";
-    private Symbols symbols;
+    private boolean isInEscreva = false;
+//    private List<String> temporaryVariables = new ArrayList<>();
 
     private void initAttribution(String variableName) {
         String cmd = identation + "STO " + variableName + newline;
-        expressionResolver = new AttributionResolver(cmd);
+        globalResolver = new AttributionResolver(cmd);
     }
 
     @Override
@@ -44,14 +45,14 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         if (!firstOperandoAdded) {
             String cmd = identation + "LDI " + valorConstante + newline;
             IResolver resolver = new OperandoResolver(cmd);
-            expressionResolver.setNext(resolver);
+            globalResolver.setNext(resolver);
             if (currentOperation != null) {
                 firstOperandoAdded = true;
             }
         } else {
             String cmd = identation + currentOperation + "I " + valorConstante + newline;
             IResolver resolver = new OperandoResolver(cmd);
-            expressionResolver.setNext(resolver);
+            globalResolver.setNext(resolver);
         }
     }
 
@@ -60,14 +61,14 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         if (!firstOperandoAdded) {
             String cmd = identation + "LD " + variableId + newline;
             IResolver resolver = new OperandoResolver(cmd);
-            expressionResolver.setNext(resolver);
+            globalResolver.setNext(resolver);
             if (currentOperation != null) {
                 firstOperandoAdded = true;
             }
         } else {
             String cmd = identation + currentOperation + " " + variableId + newline;
             IResolver resolver = new OperandoResolver(cmd);
-            expressionResolver.setNext(resolver);
+            globalResolver.setNext(resolver);
         }
     }
 
@@ -105,6 +106,14 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         throw new RuntimeException("not implemented");
     }
 
+    @Override
+    public void exitExpressao(PortugolParser.ExpressaoContext ctx) {
+        if (isInEscreva) {
+            text += globalResolver.resolve();
+            globalResolver = new AttributionResolver(identation + "STO $out_port \n");
+        }
+    }
+
     public String getAssembly() {
         return text;
     }
@@ -115,8 +124,8 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
     }
 
     private void ResolveAttribution() {
-        text += expressionResolver.resolve();
-        expressionResolver = null;
+        text += globalResolver.resolve();
+        globalResolver = null;
         currentOperation = null;
         firstOperandoAdded = false;
     }
@@ -128,10 +137,10 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
 
     @Override
     public void SetSymbolTable(Symbols symbols) {
-        this.symbols = symbols;
+        //      this.symbols = symbols;
         this.data = ".data" + newline;
-        this.data += symbols.variables.stream().map(i -> i.getName()).reduce("", (c, i) -> c + identation + i + " 0" + newline);
-        this.data += symbols.parameters.stream().map(i -> i.getName()).reduce("", (c, i) -> c + identation + i + " 0" + newline);
+        this.data += symbols.variables.stream().map(i -> i.getName()).reduce("", (c, i) -> c + identation + i + " : 0" + newline);
+        this.data += symbols.parameters.stream().map(i -> i.getName()).reduce("", (c, i) -> c + identation + i + " : 0" + newline);
     }
 
     @Override
@@ -145,6 +154,26 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
     }
 
     @Override
+    public void enterLeia(PortugolParser.LeiaContext ctx) {
+        String cmds = ctx.ID().stream()
+                .map(x -> identation + "LD $in_port" + "\n" + identation + "STO " + x.getText() + "\n")
+                .reduce("", (acc, i) -> acc + i);
+        
+        text += cmds;
+    }
+
+    @Override
+    public void enterEscreva(PortugolParser.EscrevaContext ctx) {
+        isInEscreva = true;
+        globalResolver = new AttributionResolver(identation + "STO $out_port\n");
+    }
+
+    @Override
+    public void exitEscreva(PortugolParser.EscrevaContext ctx) {
+        isInEscreva = false;
+    }
+
+    @Override
     public void enterDecSingleVar(PortugolParser.DecSingleVarContext ctx) {
         if (ctx.expressao() != null) {
             String variableName = ctx.ID().getText();
@@ -154,7 +183,7 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
 
     @Override
     public void exitDecSingleVar(PortugolParser.DecSingleVarContext ctx) {
-        if (expressionResolver != null) {
+        if (globalResolver != null) {
             ResolveAttribution();
         }
     }

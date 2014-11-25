@@ -1,0 +1,7 @@
+programa{
+    funcao inicio(){
+        inteiro oi
+        oi = 4
+        escreva(oi)
+    }
+}

@@ -1,5 +1,5 @@
 .data
-    ola 0
+    ola : 0
 .text
     _inicio:
     LDI 3
