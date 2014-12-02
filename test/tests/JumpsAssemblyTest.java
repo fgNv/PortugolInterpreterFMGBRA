@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package tests;
 
 import domain.listeners.BipAssemblyListener;
@@ -11,34 +16,23 @@ import org.junit.Test;
  *
  * @author Felipe
  */
-public class IOAssemblyTest {
+public class JumpsAssemblyTest {
 
     @Test
-    public void SimpleLeia() throws IOException {
-        String inputFileName = "SimpleLeia.txt";
-        String expectedFileName = "SimpleLeiaExpectedAssembly.txt";
+    public void SimpleIfTests() throws IOException {
+        String inputFileName = "SimpleIf.txt";
+        String expectedFileName = "SimpleIfExpectedAssembly.txt";
         IAssemblyGeneratorListener generatorListener = new BipAssemblyListener();
         AssemblyTestHelper assemblyTestHelper = new AssemblyTestHelper(inputFileName, expectedFileName, generatorListener);
         String expected = assemblyTestHelper.getExpected();
         String result = assemblyTestHelper.getResult();
         Assert.assertEquals(expected, result);
     }
-
+        
     @Test
-    public void SimpleEscreva() throws IOException {
-        String inputFileName = "SimpleEscreva.txt";
-        String expectedFileName = "SimpleEscrevaExpectedAssembly.txt";
-        IAssemblyGeneratorListener generatorListener = new BipAssemblyListener();
-        AssemblyTestHelper assemblyTestHelper = new AssemblyTestHelper(inputFileName, expectedFileName, generatorListener);
-        String expected = assemblyTestHelper.getExpected();
-        String result = assemblyTestHelper.getResult();
-        Assert.assertEquals(expected, result);
-    }
-    
-    @Test
-    public void ExpressionSumEscreva() throws IOException {
-        String inputFileName = "ExpressionSumEscreva.txt";
-        String expectedFileName = "ExpressionSumEscrevaExpectedAssembly.txt";
+    public void ComposedIfTests() throws IOException {
+        String inputFileName = "ComposedIf.txt";
+        String expectedFileName = "ComposedIfExpectedAssembly.txt";
         IAssemblyGeneratorListener generatorListener = new BipAssemblyListener();
         AssemblyTestHelper assemblyTestHelper = new AssemblyTestHelper(inputFileName, expectedFileName, generatorListener);
         String expected = assemblyTestHelper.getExpected();
