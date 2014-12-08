@@ -26,4 +26,13 @@ public class AttributionTest {
         
         Assert.assertEquals(1, listener.errors.size()); 
     }
+    
+    @Test
+    public void validVarInWhileScope() throws IOException {
+        TestHelpers<GatherSymbolsListener> helper = new TestHelpers<>();
+        LanguageManager manager = new LanguageManager();
+        GatherSymbolsListener listener = helper.getListener("ValidVarInWhileScope.txt", (s) -> manager.GetListener(s));
+        
+        Assert.assertEquals(0, listener.errors.size()); 
+    }
 }

@@ -1,0 +1,9 @@
+programa{	
+	funcao inicio(){
+		inteiro ae = 0
+		enquanto(ae <= 5){
+			ae = ae + 1
+		}
+		ae = 10
+	}
+}

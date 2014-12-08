@@ -39,4 +39,15 @@ public class JumpsAssemblyTest {
         String result = assemblyTestHelper.getResult();
         Assert.assertEquals(expected, result);
     }
+        
+    @Test
+    public void SimpleWhileTests() throws IOException {
+        String inputFileName = "SimpleWhile.txt";
+        String expectedFileName = "SimpleWhileExpectedAssembly.txt";
+        IAssemblyGeneratorListener generatorListener = new BipAssemblyListener();
+        AssemblyTestHelper assemblyTestHelper = new AssemblyTestHelper(inputFileName, expectedFileName, generatorListener);
+        String expected = assemblyTestHelper.getExpected();
+        String result = assemblyTestHelper.getResult();
+        Assert.assertEquals(expected, result);
+    }
 }

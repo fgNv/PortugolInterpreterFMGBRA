@@ -1,0 +1,20 @@
+.data
+    cont : 0
+.text
+    _inicio:
+    LDI 0
+    STO cont
+R1:
+    LD cont
+    STO temp1
+    LDI 5
+    STO temp2
+    LD temp1
+    SUB temp2
+    BGT R2
+    LD cont
+    ADDI 1
+    STO cont
+    JMP R1
+R2:
+    HLT 0
