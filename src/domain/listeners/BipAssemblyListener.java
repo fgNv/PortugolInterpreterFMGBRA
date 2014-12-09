@@ -224,6 +224,12 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
     private void ResolveAttribution() {
         if (ifState == IfState.FirstBlock) {
             ifFirstBlock += globalResolver.resolve();
+        } else if (forState == ForState.increment) {
+            incrementFor += globalResolver.resolve();
+        } else if (forState == ForState.block) {
+            blockFor += globalResolver.resolve();
+        } else if (forState == ForState.evaluation) {
+            evaluationFor += globalResolver.resolve();
         } else {
             text += globalResolver.resolve();
         }
@@ -397,18 +403,18 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         AddBrenchEvaluationAssembly(currentLabelLevel - 1);
     }
 
-    @Override
-    public void enterPara(PortugolParser.ParaContext ctx) {
-        forState = ForState.init;
-        
-    }
-
+//    @Override
+//    public void exitPara(PortugolParser.ParaContext ctx) {
+//        text += 
+//    }
+    
     @Override
     public void enterContador_para(PortugolParser.Contador_paraContext ctx) {
         forState = ForState.init;
         String variableName = ctx.ID().getText();
         String cmd = identation + "STO " + variableName + newline;
         globalResolver = new AttributionResolver(cmd);
+        forState = ForState.init;
     }
 
     @Override
