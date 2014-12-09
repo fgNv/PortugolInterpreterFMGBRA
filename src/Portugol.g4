@@ -59,7 +59,7 @@ faca : FACA bloco ENQUANTO '(' expressao ')';
 enquanto : ENQUANTO '(' expressao ')' bloco;
 para : PARA '('contador_para? (',' contador_para)* ';' expressao? ';' alteracaoValorVariavel? (',' alteracaoValorVariavel)* ')' bloco;
 
-contador_para : tipo ID '=' expressao;
+contador_para : tipo? ID '=' expressao;
 
 escolha : ESCOLHA'('expressao')''{' caso* (CASO CONTRARIO ':' comando*)? '}';
 caso : CASO valor_constante ':' comando* PARE?;

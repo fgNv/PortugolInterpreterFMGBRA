@@ -1,0 +1,9 @@
+programa{
+    funcao inicio(){
+        inteiro ae = 3
+        faca{
+            ae = ae + 1
+        }enquanto(ae <= 10)
+        ae = 3
+    }
+}

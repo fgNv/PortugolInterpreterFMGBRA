@@ -1,0 +1,14 @@
+.data
+    oi : 0
+.text
+    _inicio:
+    LDI 4
+    STO oi
+    LD oi
+    ADDI 3
+    ADDI 5
+    STO $out_port
+    LD oi
+    SUBI 2
+    STO $out_port
+    HLT 0

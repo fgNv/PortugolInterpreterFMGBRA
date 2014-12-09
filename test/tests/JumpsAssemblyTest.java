@@ -28,7 +28,7 @@ public class JumpsAssemblyTest {
         String result = assemblyTestHelper.getResult();
         Assert.assertEquals(expected, result);
     }
-        
+
     @Test
     public void ComposedIfTests() throws IOException {
         String inputFileName = "ComposedIf.txt";
@@ -39,11 +39,33 @@ public class JumpsAssemblyTest {
         String result = assemblyTestHelper.getResult();
         Assert.assertEquals(expected, result);
     }
-        
+
     @Test
     public void SimpleWhileTests() throws IOException {
         String inputFileName = "SimpleWhile.txt";
         String expectedFileName = "SimpleWhileExpectedAssembly.txt";
+        IAssemblyGeneratorListener generatorListener = new BipAssemblyListener();
+        AssemblyTestHelper assemblyTestHelper = new AssemblyTestHelper(inputFileName, expectedFileName, generatorListener);
+        String expected = assemblyTestHelper.getExpected();
+        String result = assemblyTestHelper.getResult();
+        Assert.assertEquals(expected, result);
+    }
+
+    @Test
+    public void SimpleDoWhileTests() throws IOException {
+        String inputFileName = "SimpleDoWhile.txt";
+        String expectedFileName = "SimpleDoWhileExpectedAssembly.txt";
+        IAssemblyGeneratorListener generatorListener = new BipAssemblyListener();
+        AssemblyTestHelper assemblyTestHelper = new AssemblyTestHelper(inputFileName, expectedFileName, generatorListener);
+        String expected = assemblyTestHelper.getExpected();
+        String result = assemblyTestHelper.getResult();
+        Assert.assertEquals(expected, result);
+    }
+    
+    @Test
+    public void SimpleForTests() throws IOException {
+        String inputFileName = "SimpleFor.txt";
+        String expectedFileName = "SimpleForExpectedAssembly.txt";
         IAssemblyGeneratorListener generatorListener = new BipAssemblyListener();
         AssemblyTestHelper assemblyTestHelper = new AssemblyTestHelper(inputFileName, expectedFileName, generatorListener);
         String expected = assemblyTestHelper.getExpected();

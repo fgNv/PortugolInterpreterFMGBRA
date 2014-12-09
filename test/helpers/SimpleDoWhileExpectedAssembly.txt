@@ -1,0 +1,20 @@
+.data
+    ae : 0
+.text
+    _inicio:
+    LDI 3
+    STO ae
+R1:
+    LD ae
+    ADDI 1
+    STO ae
+    LD ae
+    STO temp1
+    LDI 10
+    STO temp2
+    LD temp1
+    SUB temp2
+    BLE R1
+    LDI 3
+    STO ae
+    HLT 0

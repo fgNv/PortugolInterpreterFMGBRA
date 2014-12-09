@@ -1,0 +1,9 @@
+programa{
+    funcao inicio(){
+        inteiro ae
+        para(ae = 0; ae < 5; ae++){
+            inteiro oi 
+            oi = 3
+        }
+    }
+}

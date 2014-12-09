@@ -8,12 +8,15 @@ package domain.listeners;
 import Antl4GeneratedMember.PortugolBaseListener;
 import Antl4GeneratedMember.PortugolParser;
 import Antl4GeneratedMember.PortugolParser.Id_consumoContext;
+import domain.DoWhileState;
+import domain.ForState;
 import domain.enums.IfState;
 import domain.Symbols;
 import domain.assemblyResolver.AttributionResolver;
 import domain.assemblyResolver.IResolver;
 import domain.assemblyResolver.OperandoResolver;
 import domain.enums.WhileState;
+import java.util.Stack;
 
 /**
  *
@@ -30,11 +33,18 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
     private final String identation = "    ";
     private boolean isInEscreva = false;
     private IfState ifState = IfState.None;
+    private DoWhileState doWhileState = DoWhileState.none;
     private int currentLabelLevel = 1;
     private int currentTemp = 1;
     String ifFirstBlock = "";
     String ifSecondBlock = "";
+    String initFor = "";
+    String incrementFor = "";
+    String blockFor = "";
+    String evaluationFor = "";
+    private Stack<Integer> labelStack = new Stack<>();
     WhileState whileState = WhileState.none;
+    ForState forState = ForState.none;
 
     private void initAttribution(String variableName) {
         String cmd = identation + "STO " + variableName + newline;
@@ -81,8 +91,10 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
 
     private void resolveOperando(PortugolParser.OperandoContext operando) {
 
+        boolean isInJumpEvalExp = ifState == IfState.SingleBlock || ifState == IfState.Expression || whileState == WhileState.expression || doWhileState == DoWhileState.expression;
+
         if (operando.valor_constante() != null) {
-            if (ifState == IfState.SingleBlock || ifState == IfState.Expression || whileState == WhileState.expression) {
+            if (isInJumpEvalExp) {
                 text += identation + "LDI " + operando.valor_constante().getText() + newline;
                 text += identation + "STO temp" + currentTemp + newline;
                 currentTemp++;
@@ -93,7 +105,7 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         }
 
         if (operando.id_consumo() != null) {
-            if (ifState == IfState.SingleBlock || ifState == IfState.Expression || whileState == WhileState.expression) {
+            if (isInJumpEvalExp) {
                 text += identation + "LD " + operando.id_consumo().getText() + newline;
                 text += identation + "STO temp" + currentTemp + newline;
                 currentTemp++;
@@ -116,6 +128,21 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
                 return "BLE";
             case ">=":
                 return "BLT";
+            default:
+                throw new RuntimeException("Invalid operator " + operator + " on priority comparison resolver");
+        }
+    }
+
+    private String ResolvePriorityComparisonOperationDoWhile(String operator) {
+        switch (operator) {
+            case "<":
+                return "BLT";
+            case "<=":
+                return "BLE";
+            case ">":
+                return "BGT";
+            case ">=":
+                return "BGE";
             default:
                 throw new RuntimeException("Invalid operator " + operator + " on priority comparison resolver");
         }
@@ -151,10 +178,14 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         }
 
         boolean useIfComparisonResolver = ifState == IfState.SingleBlock || ifState == IfState.Expression || whileState == WhileState.expression;
+        boolean useDoWhileComparisonResolver = doWhileState == DoWhileState.expression;
 
         if (ctx.operador_comparacao_prioritario() != null) {
             if (useIfComparisonResolver) {
                 currentOperation = ResolvePriorityComparisonOperationIf(ctx.operador_comparacao_prioritario().getText());
+            }
+            if (useDoWhileComparisonResolver) {
+                currentOperation = ResolvePriorityComparisonOperationDoWhile(ctx.operador_comparacao_prioritario().getText());
             }
             return;
         }
@@ -162,6 +193,9 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         if (ctx.operador_comparacao_secundario() != null) {
             if (useIfComparisonResolver) {
                 currentOperation = ResolveSecondaryComparisonOperation(ctx.operador_comparacao_secundario().getText());
+            }
+            if (useDoWhileComparisonResolver) {
+                currentOperation = ResolvePriorityComparisonOperationDoWhile(ctx.operador_comparacao_prioritario().getText());
             }
             return;
         }
@@ -229,10 +263,10 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         text += cmds;
     }
 
-    private void AddIfEvaluationAssembly() {
+    private void AddBrenchEvaluationAssembly(int labelLevel) {
         text += identation + "LD temp" + (currentTemp - 2) + newline;
         text += identation + "SUB temp" + (currentTemp - 1) + newline;
-        text += identation + currentOperation + " R" + currentLabelLevel + newline;
+        text += identation + currentOperation + " R" + labelLevel + newline;
     }
 
     private void AddWhileEvaluationAssembly() {
@@ -254,14 +288,14 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         }
 
         if (ifState == IfState.Expression) {
-            AddIfEvaluationAssembly();
-            ifFirstBlock = "R" + currentLabelLevel + ":" +newline;
+            AddBrenchEvaluationAssembly(currentLabelLevel);
+            ifFirstBlock = "R" + currentLabelLevel + ":" + newline;
             ifState = IfState.FirstBlock;
             return;
         }
 
         if (ifState == IfState.SingleBlock) {
-            AddIfEvaluationAssembly();
+            AddBrenchEvaluationAssembly(currentLabelLevel);
             ifState = IfState.EndedSingleBlock;
         }
 
@@ -272,12 +306,9 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
 
     @Override
     public void exitBloco(PortugolParser.BlocoContext ctx) {
-        if (ifState == IfState.None && whileState == WhileState.none) {
-            return;
-        }
 
         if (whileState == WhileState.block) {
-            text +=  identation + "JMP R" + currentLabelLevel +  newline;
+            text += identation + "JMP R" + currentLabelLevel + newline;
             currentLabelLevel++;
             text += "R" + currentLabelLevel + ":" + newline;
         }
@@ -291,6 +322,11 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
             text += ifFirstBlock;
             text += "R" + currentLabelLevel + ":" + newline;
             ifState = IfState.None;
+        }
+
+        if (doWhileState == DoWhileState.block) {
+            doWhileState = DoWhileState.expression;
+            globalResolver = new AttributionResolver("");
         }
 
         currentLabelLevel++;
@@ -349,4 +385,35 @@ public class BipAssemblyListener extends PortugolBaseListener implements IAssemb
         whileState = WhileState.none;
     }
 
+    @Override
+    public void enterFaca(PortugolParser.FacaContext ctx) {
+        text += "R" + currentLabelLevel + ":" + newline;
+        doWhileState = DoWhileState.block;
+    }
+
+    @Override
+    public void exitFaca(PortugolParser.FacaContext ctx) {
+        doWhileState = DoWhileState.none;
+        AddBrenchEvaluationAssembly(currentLabelLevel - 1);
+    }
+
+    @Override
+    public void enterPara(PortugolParser.ParaContext ctx) {
+        forState = ForState.init;
+        
+    }
+
+    @Override
+    public void enterContador_para(PortugolParser.Contador_paraContext ctx) {
+        forState = ForState.init;
+        String variableName = ctx.ID().getText();
+        String cmd = identation + "STO " + variableName + newline;
+        globalResolver = new AttributionResolver(cmd);
+    }
+
+    @Override
+    public void exitContador_para(PortugolParser.Contador_paraContext ctx) {
+        forState = ForState.increment;
+        text += "R" + currentLabelLevel + ":" + newline;
+    }
 }
